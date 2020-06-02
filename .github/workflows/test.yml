@@ -11,9 +11,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - run: |
-          npm install
-          npm run all
+      - uses: actions/cache@v2
+        id: restore-cache
+        with:
+          path: |
+            ./node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - run: npm ci
+        if: steps.restore-cache.outputs.cache-hit != 'true'
+      - run: npm run all
 
   test-run: # make sure the action works on a clean machine without building
     runs-on: ${{ matrix.os }}
