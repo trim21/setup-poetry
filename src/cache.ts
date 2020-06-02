@@ -19,10 +19,16 @@ export async function setup(
   pythonVersion: string,
   poetryVersion: string
 ): Promise<Boolean> {
-  return !!(await cache.saveCache(
-    paths,
-    cacheKey(pythonVersion, poetryVersion)
-  ))
+  try {
+    await cache.saveCache(paths, cacheKey(pythonVersion, poetryVersion))
+  } catch (e) {
+    if (e instanceof cache.ReserveCacheError) {
+      return false
+    } else {
+      throw e
+    }
+  }
+  return true
 }
 
 export async function restore(

@@ -1,3 +1,1 @@
-test('throws invalid number', async () => {
-})
-
+test('throws invalid number', async () => {})
