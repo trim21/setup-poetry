@@ -19,7 +19,13 @@ module.exports =
 /******/ 		};
 /******/
 /******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 		var threw = true;
+/******/ 		try {
+/******/ 			modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 			threw = false;
+/******/ 		} finally {
+/******/ 			if(threw) delete installedModules[moduleId];
+/******/ 		}
 /******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
@@ -7072,7 +7078,7 @@ const paths = [path.join(os.homedir(), '.poetry')];
 function cacheKey(pyVersion, version) {
     const md5 = crypto.createHash('md5');
     const result = md5.update(pyVersion).digest('hex');
-    const key = `tool-poetry-1-${process.platform}-${result}-${version}`;
+    const key = `trim21-tool-poetry-1-${process.platform}-${result}-${version}`;
     core.info(`cache with key ${key}`);
     return key;
 }
