@@ -7084,7 +7084,16 @@ function cacheKey(pyVersion, version) {
 }
 function setup(pythonVersion, poetryVersion) {
     return __awaiter(this, void 0, void 0, function* () {
-        return !!(yield cache.saveCache(paths, cacheKey(pythonVersion, poetryVersion)));
+        try {
+            yield cache.saveCache(paths, cacheKey(pythonVersion, poetryVersion));
+        }
+        catch (e) {
+            if (e.toString().includes('reserveCache failed')) {
+                core.info(e.message);
+                return;
+            }
+            throw e;
+        }
     });
 }
 exports.setup = setup;

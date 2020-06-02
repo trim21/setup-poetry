@@ -18,11 +18,19 @@ function cacheKey (pyVersion: string, version: string): string {
 export async function setup (
   pythonVersion: string,
   poetryVersion: string
-): Promise<Boolean> {
-  return !!(await cache.saveCache(
-    paths,
-    cacheKey(pythonVersion, poetryVersion)
-  ))
+): Promise<void> {
+  try {
+    await cache.saveCache(
+      paths,
+      cacheKey(pythonVersion, poetryVersion)
+    )
+  } catch (e) {
+    if (e.toString().includes('reserveCache failed')) {
+      core.info(e.message)
+      return
+    }
+    throw e
+  }
 }
 
 export async function restore (
