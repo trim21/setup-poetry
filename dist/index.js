@@ -7078,18 +7078,7 @@ function cacheKey(pyVersion, version) {
 }
 function setup(pythonVersion, poetryVersion) {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield cache.saveCache(paths, cacheKey(pythonVersion, poetryVersion));
-        }
-        catch (e) {
-            if (e instanceof cache.ReserveCacheError) {
-                return false;
-            }
-            else {
-                throw e;
-            }
-        }
-        return true;
+        return !!(yield cache.saveCache(paths, cacheKey(pythonVersion, poetryVersion)));
     });
 }
 exports.setup = setup;
