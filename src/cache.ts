@@ -7,7 +7,7 @@ import * as core from '@actions/core'
 
 const paths = [path.join(os.homedir(), '.poetry')]
 
-function cacheKey(pyVersion: string, version: string): string {
+function cacheKey (pyVersion: string, version: string): string {
   const md5 = crypto.createHash('md5')
   const result = md5.update(pyVersion).digest('hex')
   const key = `trim21-tool-poetry-1-${process.platform}-${result}-${version}`
@@ -15,7 +15,7 @@ function cacheKey(pyVersion: string, version: string): string {
   return key
 }
 
-export async function setup(
+export async function setup (
   pythonVersion: string,
   poetryVersion: string
 ): Promise<Boolean> {
@@ -25,7 +25,7 @@ export async function setup(
   ))
 }
 
-export async function restore(
+export async function restore (
   pythonVersion: string,
   poetryVersion: string
 ): Promise<Boolean> {

@@ -2,11 +2,11 @@ import * as os from 'os'
 import * as path from 'path'
 
 import * as core from '@actions/core'
-import {exec} from '@actions/exec'
-import {getLatestVersion, getPythonVersion, getTmpDir} from './utils'
-import {restore, setup} from './cache'
+import { exec } from '@actions/exec'
+import { getLatestVersion, getPythonVersion, getTmpDir } from './utils'
+import { restore, setup } from './cache'
 
-async function run(): Promise<void> {
+async function run (): Promise<void> {
   let installedVersion = core.getInput('version')
   // const preview = core.getInput('preview')
   const tmpDir = getTmpDir()

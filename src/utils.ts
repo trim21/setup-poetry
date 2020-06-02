@@ -1,15 +1,15 @@
 import * as os from 'os'
 import * as path from 'path'
 import * as fs from 'fs'
-import {exec} from '@actions/exec'
+import { exec } from '@actions/exec'
 
-import {HttpClient, HttpClientResponse} from '@actions/http-client'
+import { HttpClient, HttpClientResponse } from '@actions/http-client'
 
 interface PypiJson {
   info: {version: string}
 }
 
-export async function getLatestVersion(): Promise<string> {
+export async function getLatestVersion (): Promise<string> {
   const http = new HttpClient('actions install poetry')
   const res: HttpClientResponse = await http.get(
     'https://pypi.org/pypi/poetry/json'
@@ -19,7 +19,7 @@ export async function getLatestVersion(): Promise<string> {
   return obj.info.version
 }
 
-export function getTmpDir(): string {
+export function getTmpDir (): string {
   const tmpBase = os.tmpdir()
   const tmp = path.join(tmpBase, 'setup-poetry')
   path.join(tmpBase, 'setup-poetry')
@@ -27,7 +27,7 @@ export function getTmpDir(): string {
   return tmp
 }
 
-export async function getPythonVersion(): Promise<string> {
+export async function getPythonVersion (): Promise<string> {
   let myOutput = ''
   const options = {
     silent: true,
