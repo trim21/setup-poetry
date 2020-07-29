@@ -3,7 +3,7 @@ name: deploy
 on:
   push:
     tags:
-      - "v*"
+      - "v1*"
 
 jobs:
   deploy:
@@ -40,7 +40,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           commit_message: deploy ${{ github.ref }}
-          force_orphan: true
           publish_branch: dist/v1
           user_name: github-actions[bot]
           user_email: github-actions[bot]@users.noreply.github.com
