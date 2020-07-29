@@ -22,7 +22,7 @@ jobs:
         id: cache
         with:
           path: ./node_modules
-          key: node-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
+          key: node-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
 
       - run: npm ci
         if: steps.cache.outputs.cache-hit != 'true'
