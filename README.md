@@ -4,7 +4,7 @@
 
 
 ```yaml
-uses: Trim21/setup-poetry@v1
+uses: Trim21/setup-poetry@dist/v1
 # with:
 #   version: 1.0.5
 ```
