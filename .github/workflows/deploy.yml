@@ -27,7 +27,7 @@ jobs:
       - run: npm ci
         if: steps.cache.outputs.cache-hit != 'true'
 
-      - run: npm run build
+      - run: npm run pack
 
       - run: |
           mkdir dist/dist
