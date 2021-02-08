@@ -45823,6 +45823,7 @@ const path = __importStar(__webpack_require__(622));
 const cache = __importStar(__webpack_require__(692));
 const crypto = __importStar(__webpack_require__(417));
 const core = __importStar(__webpack_require__(470));
+const cache_1 = __webpack_require__(692);
 const paths = [path.join(os.homedir(), '.poetry')];
 function cacheKey(pyVersion, version) {
     const md5 = crypto.createHash('md5');
@@ -45837,9 +45838,11 @@ function setup(pythonVersion, poetryVersion) {
             yield cache.saveCache(paths, cacheKey(pythonVersion, poetryVersion));
         }
         catch (e) {
-            if (e.toString().includes('reserveCache failed')) {
-                core.info(e.message);
-                return;
+            if (e.name === cache_1.ReserveCacheError.name) {
+                if (e.toString().includes('another job may be creating this cache')) {
+                    return;
+                }
+                throw e;
             }
             throw e;
         }
