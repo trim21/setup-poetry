@@ -4,6 +4,7 @@ import * as path from 'path'
 import * as cache from '@actions/cache'
 import * as crypto from 'crypto'
 import * as core from '@actions/core'
+import { ReserveCacheError } from '@actions/cache'
 
 const paths = [path.join(os.homedir(), '.poetry')]
 
@@ -25,9 +26,11 @@ export async function setup (
       cacheKey(pythonVersion, poetryVersion)
     )
   } catch (e) {
-    if (e.toString().includes('reserveCache failed')) {
-      core.info(e.message)
-      return
+    if (e.name === ReserveCacheError.name) {
+      if (e.toString().includes('another job may be creating this cache')) {
+        return
+      }
+      throw e
     }
     throw e
   }
