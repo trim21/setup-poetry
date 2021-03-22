@@ -1,34 +1,35 @@
-import * as os from 'os'
-import * as path from 'path'
+import * as os from "os";
+import * as path from "path";
 
-import * as core from '@actions/core'
-import { exec } from '@actions/exec'
-import { getLatestVersion, getPythonVersion, getTmpDir } from './utils'
-import { restore, setup } from './cache'
+import * as core from "@actions/core";
+import { exec } from "@actions/exec";
 
-async function run (): Promise<void> {
-  let installedVersion = core.getInput('version')
+import { getLatestPoetryVersion, getPythonVersion, getTmpDir } from "./utils";
+import * as cache from "./cache";
+
+async function run(): Promise<void> {
+  let installedVersion = core.getInput("version");
   // const preview = core.getInput('preview')
-  const tmpDir = getTmpDir()
-  const pythonVersion = await getPythonVersion()
+  const tmpDir = getTmpDir();
+  const pythonVersion = await getPythonVersion();
 
   if (!installedVersion) {
-    installedVersion = await getLatestVersion()
+    installedVersion = await getLatestPoetryVersion();
   }
 
-  const flags = `--version=${installedVersion}`
+  const flags = `--version=${installedVersion}`;
 
-  if (!(await restore(pythonVersion, installedVersion))) {
+  if (!(await cache.restore(pythonVersion, installedVersion))) {
     await exec(
       `curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py -o ${tmpDir}/get-poetry.py`
-    )
-    await exec(`python ${tmpDir}/get-poetry.py --yes ${flags}`)
-    await setup(pythonVersion, installedVersion)
+    );
+    await exec(`python ${tmpDir}/get-poetry.py --yes ${flags}`);
+    await cache.setup(pythonVersion, installedVersion);
   }
-  core.addPath(path.join(os.homedir(), '.poetry', 'bin'))
+  core.addPath(path.join(os.homedir(), ".poetry", "bin"));
 }
 
-run().catch(e => {
-  core.setFailed(e)
-  process.exit(1)
-})
+run().catch((e) => {
+  core.setFailed(e);
+  process.exit(1);
+});
