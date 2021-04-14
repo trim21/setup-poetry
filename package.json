@@ -26,31 +26,31 @@
   "author": "YourNameOrOrganization",
   "license": "MIT",
   "dependencies": {
-    "@actions/cache": "1.0.6",
-    "@actions/core": "1.2.6",
+    "@actions/cache": "1.0.7",
+    "@actions/core": "1.2.7",
     "@actions/exec": "1.0.4",
-    "@actions/http-client": "1.0.9"
+    "@actions/http-client": "1.0.11"
   },
   "devDependencies": {
-    "@types/jest": "26.0.20",
-    "@types/node": "14.14.35",
-    "@typescript-eslint/parser": "4.18.0",
-    "@typescript-eslint/eslint-plugin": "4.18.0",
+    "@types/jest": "26.0.22",
+    "@types/node": "14.14.37",
+    "@typescript-eslint/parser": "4.22.0",
+    "@typescript-eslint/eslint-plugin": "4.22.0",
     "@zeit/ncc": "0.22.3",
-    "eslint": "7.22.0",
-    "eslint-plugin-jest": "24.3.1",
+    "eslint": "7.24.0",
+    "eslint-plugin-jest": "24.3.5",
     "jest": "26.6.3",
     "jest-circus": "26.6.3",
-    "@vercel/ncc": "0.27.0",
-    "eslint-config-prettier": "8.1.0",
+    "@vercel/ncc": "0.28.3",
+    "eslint-config-prettier": "8.2.0",
     "eslint-config-standard": "16.0.2",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "4.3.1",
     "eslint-plugin-standard": "4.1.0",
-    "typescript": "4.2.3",
+    "typescript": "4.2.4",
     "eslint-plugin-prettier": "3.3.1",
     "prettier": "2.2.1",
-    "ts-jest": "26.5.0"
+    "ts-jest": "26.5.4"
   }
 }
