@@ -16,16 +16,13 @@ async function run(): Promise<void> {
   if (!installedVersion) {
     installedVersion = await getLatestPoetryVersion();
   }
-
-  const flags = `--version ${installedVersion}`;
+  const args = [path.join(tmpDir, "install-poetry.py"), "--yes", "--version", installedVersion];
   const poetryHome = path.join(os.homedir(), ".poetry");
 
   if (!(await cache.restore(pythonVersion, installedVersion))) {
-    const installer = "https://cdn.jsdelivr.net/gh/python-poetry/poetry@master/install-poetry.py";
+    const installer = "https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py";
     await exec(`curl -sSL ${installer} -o ${tmpDir}/install-poetry.py`);
-    await exec(
-      `python ${tmpDir}/install-poetry.py --yes ${flags} --path ${poetryHome}`,
-      undefined,
+    await exec("python", args,
       {
         env: {
           POETRY_HOME: poetryHome,
