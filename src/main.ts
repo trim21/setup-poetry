@@ -4,6 +4,7 @@ import * as path from "path";
 import * as core from "@actions/core";
 import { exec } from "@actions/exec";
 
+// import { getLatestPoetryVersion, getPythonVersion, getTmpDir } from "./utils";
 import { getLatestPoetryVersion, getTmpDir } from "./utils";
 
 // import * as cache from "./cache";
