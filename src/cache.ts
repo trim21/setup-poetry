@@ -6,12 +6,12 @@ import * as cache from "@actions/cache";
 import * as core from "@actions/core";
 import { ReserveCacheError } from "@actions/cache";
 
-const paths = [path.join(os.homedir(), ".poetry")];
+const paths = [path.join(os.homedir(), ".poetry", ".venv")];
 
 function cacheKey(pyVersion: string, version: string): string {
   const md5 = crypto.createHash("md5");
   const result = md5.update(pyVersion).digest("hex");
-  const key = `trim21-tool-poetry-1-${process.platform}-${result}-${version}`;
+  const key = `trim21-tool-poetry-4-${process.platform}-${result}-${version}`;
   core.info(`cache with key ${key}`);
   return key;
 }
