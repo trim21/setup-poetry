@@ -2,6 +2,7 @@ import * as os from "os";
 import * as path from "path";
 import * as fs from "fs";
 import * as crypto from "crypto";
+import { symlink } from "fs/promises";
 
 import { exec } from "@actions/exec";
 import { HttpClient, HttpClientResponse } from "@actions/http-client";
@@ -20,14 +21,6 @@ export async function getLatestPoetryVersion(): Promise<string> {
   return obj.info.version;
 }
 
-export function getTmpDir(): string {
-  const tmpBase = os.tmpdir();
-  const hex = crypto.randomBytes(16).toString("hex");
-  const tmp = path.join(tmpBase, "setup-poetry-" + hex);
-  fs.mkdirSync(tmp, { recursive: true });
-  return tmp;
-}
-
 export async function getPythonVersion(): Promise<string> {
   let myOutput = "";
   const options = {
@@ -41,4 +34,24 @@ export async function getPythonVersion(): Promise<string> {
 
   await exec("python", ["-VV"], options);
   return myOutput;
+}
+
+export async function createVenv(): Promise<string> {
+  await exec("python", ["-m", "venv", ".venv"]);
+  if (process.platform === "linux" || process.platform === "darwin") {
+    return path.join(".venv", "bin", "python.exe");
+  } else if (process.platform === "win32") {
+    return path.join(".venv", "Scripts", "python.exe");
+  }
+  return "";
+}
+
+export async function createSymlink(poetryHome: string) {
+
+  if (process.platform === "linux" || process.platform === "darwin") {
+    await symlink(path.join(poetryHome, "bin", "poetry"), path.join(".venv", "bin", "poetry.exe"));
+  } else if (process.platform === "win32") {
+    await symlink(path.join(poetryHome, "bin", "poetry"), path.join(".venv", "Scripts", "poetry.exe"));
+  }
+
 }
