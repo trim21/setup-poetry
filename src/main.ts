@@ -20,9 +20,7 @@ async function run(): Promise<void> {
   const flags = `--version=${installedVersion}`;
 
   if (!(await cache.restore(pythonVersion, installedVersion))) {
-    await exec(
-      `curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -o ${tmpDir}/get-poetry.py`
-    );
+    await exec(`curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -o ${tmpDir}/get-poetry.py`);
     await exec(`python ${tmpDir}/get-poetry.py --yes ${flags}`);
     await cache.setup(pythonVersion, installedVersion);
   }
