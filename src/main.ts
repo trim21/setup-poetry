@@ -23,18 +23,18 @@ async function run(): Promise<void> {
   }
   const poetryHome = path.join(os.homedir(), ".poetry");
 
-  // if (!(await cache.restore(pythonVersion, wantedVersion))) {
-  if (!fs.existsSync(poetryHome)) {
-    fs.mkdirSync(poetryHome);
-  }
-  process.chdir(poetryHome);
-  const pythonPath = await createVenv();
-  await exec(pythonPath, ["-m", "pip", "install", `poetry==${wantedVersion}`]);
-  await cache.setup(pythonVersion, wantedVersion);
+  if (!(await cache.restore(pythonVersion, wantedVersion))) {
+    if (!fs.existsSync(poetryHome)) {
+      fs.mkdirSync(poetryHome);
+    }
+    process.chdir(poetryHome);
+    const pythonPath = await createVenv();
+    await exec(pythonPath, ["-m", "pip", "install", `poetry==${wantedVersion}`]);
+    await cache.setup(pythonVersion, wantedVersion);
 
-  fs.mkdirSync(path.join(poetryHome, "bin"));
-  await createSymlink(poetryHome);
-  // }
+    fs.mkdirSync(path.join(poetryHome, "bin"));
+    await createSymlink(poetryHome);
+  }
   core.info(path.join(poetryHome, "bin"));
   core.addPath(path.join(poetryHome, "bin"));
 }
