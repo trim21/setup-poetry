@@ -32,6 +32,7 @@ async function run(): Promise<void> {
     });
   // await cache.setup(pythonVersion, installedVersion);
   // }
+  core.info(path.join(poetryHome, "bin"));
   core.addPath(path.join(poetryHome, "bin"));
 }
 
