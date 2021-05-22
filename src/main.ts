@@ -17,13 +17,12 @@ async function run(): Promise<void> {
     installedVersion = await getLatestPoetryVersion();
   }
   const installerPath = path.join(tmpDir, "install-poetry.py");
-  const args = [installerPath, "--yes", "--version", installedVersion];
   const poetryHome = path.join(os.homedir(), ".poetry");
 
   if (!(await cache.restore(pythonVersion, installedVersion))) {
     const installer = "https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py";
     await exec("curl", ["-sSL", installer, "-o", installerPath]);
-    await exec("python", args,
+    await exec("python", [installerPath, "--yes", "--version", installedVersion, "--path", poetryHome],
       {
         env: {
           POETRY_HOME: poetryHome,
