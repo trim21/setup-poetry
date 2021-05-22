@@ -36,7 +36,7 @@ export async function getPythonVersion(): Promise<string> {
 export async function createVenv(): Promise<string> {
   await exec("python", ["-m", "venv", ".venv"]);
   if (process.platform === "linux" || process.platform === "darwin") {
-    return path.join(".venv", "bin", "python.exe");
+    return path.join(".venv", "bin", "python");
   } else if (process.platform === "win32") {
     return path.join(".venv", "Scripts", "python.exe");
   }
