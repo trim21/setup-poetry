@@ -45,7 +45,7 @@ export async function createVenv(): Promise<string> {
 
 export async function createSymlink(poetryHome: string) {
   if (process.platform === "linux" || process.platform === "darwin") {
-    await fs.symlink(path.join(".venv", "bin", "poetry.exe"), path.join(poetryHome, "bin", "poetry"));
+    await fs.symlink(path.join(".venv", "bin", "poetry"), path.join(poetryHome, "bin", "poetry"));
   } else if (process.platform === "win32") {
     await fs.symlink(path.join(".venv", "Scripts", "poetry.exe"), path.join(poetryHome, "bin", "poetry.exe"));
   }
