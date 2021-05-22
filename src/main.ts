@@ -31,11 +31,9 @@ async function run(): Promise<void> {
     const pythonPath = await createVenv();
     await exec(pythonPath, ["-m", "pip", "install", `poetry==${wantedVersion}`]);
     await cache.setup(pythonVersion, wantedVersion);
-
-    fs.mkdirSync(path.join(poetryHome, "bin"));
-    await createSymlink(poetryHome);
   }
-  core.info(path.join(poetryHome, "bin"));
+  fs.mkdirSync(path.join(poetryHome, "bin"));
+  await createSymlink(poetryHome);
   core.addPath(path.join(poetryHome, "bin"));
 }
 
