@@ -24,7 +24,7 @@ async function run(): Promise<void> {
   // if (!(await cache.restore(pythonVersion, installedVersion))) {
   const installer = "https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py";
   await exec("curl", ["-sSL", installer, "-o", installerPath]);
-  await exec("python", [installerPath, "--yes", "--version", installedVersion, "--path", poetryHome],
+  await exec("python", [installerPath, "--yes", "--version", installedVersion],
     {
       env: {
         POETRY_HOME: poetryHome,
