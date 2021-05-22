@@ -34,6 +34,8 @@ module.exports = {
     ecmaVersion: 6,
   },
   rules: {
+    "object-curly-spacing": ["error", "always"],
+    "@typescript-eslint/object-curly-spacing": ["error", "always"],
     quotes: ["error", "double", { "avoidEscape": true }],
     "@typescript-eslint/member-delimiter-style": ["error", {
       "multiline": {

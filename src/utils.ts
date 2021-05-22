@@ -7,7 +7,7 @@ import { exec } from "@actions/exec";
 import { HttpClient, HttpClientResponse } from "@actions/http-client";
 
 interface PypiJson {
-  info: {version: string};
+  info: { version: string };
 }
 
 export async function getLatestPoetryVersion(): Promise<string> {
