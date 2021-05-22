@@ -24,14 +24,15 @@ async function run(): Promise<void> {
   // if (!(await cache.restore(pythonVersion, installedVersion))) {
   const installer = "https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py";
   await exec("curl", ["-sSL", installer, "-o", installerPath]);
-  await exec(
-    "python",
-    [installerPath, "--yes", "--version", installedVersion, "--path", poetryHome]
-  );
+  await exec("python", [installerPath, "--yes", "--version", installedVersion, "--path", poetryHome],
+    {
+      env: {
+        POETRY_HOME: poetryHome,
+      },
+    });
   // await cache.setup(pythonVersion, installedVersion);
   // }
   core.addPath(path.join(poetryHome, "bin"));
-  await exec(path.join(poetryHome, "bin", "poetry"), ["--version"]);
 }
 
 run().catch((e) => {
