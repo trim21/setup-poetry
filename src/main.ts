@@ -7,7 +7,7 @@ import { exec } from "@actions/exec";
 import { getLatestPoetryVersion, getPythonVersion, getTmpDir } from "./utils";
 import * as cache from "./cache";
 
-async function run(): Promise<void> {
+async function run (): Promise<void> {
   let installedVersion = core.getInput("version");
   // const preview = core.getInput('preview')
   const tmpDir = getTmpDir();
@@ -21,7 +21,7 @@ async function run(): Promise<void> {
 
   if (!(await cache.restore(pythonVersion, installedVersion))) {
     await exec(
-      `curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py -o ${tmpDir}/get-poetry.py`
+      `curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -o ${tmpDir}/get-poetry.py`,
     );
     await exec(`python ${tmpDir}/get-poetry.py --yes ${flags}`);
     await cache.setup(pythonVersion, installedVersion);
