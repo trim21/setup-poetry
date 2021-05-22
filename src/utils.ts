@@ -1,8 +1,5 @@
-import * as os from "os";
 import * as path from "path";
-import * as fs from "fs";
-import * as crypto from "crypto";
-import { symlink } from "fs/promises";
+import { promises as fs } from "fs";
 
 import { exec } from "@actions/exec";
 import { HttpClient, HttpClientResponse } from "@actions/http-client";
@@ -49,9 +46,9 @@ export async function createVenv(): Promise<string> {
 export async function createSymlink(poetryHome: string) {
 
   if (process.platform === "linux" || process.platform === "darwin") {
-    await symlink(path.join(poetryHome, "bin", "poetry"), path.join(".venv", "bin", "poetry.exe"));
+    await fs.symlink(path.join(poetryHome, "bin", "poetry"), path.join(".venv", "bin", "poetry.exe"));
   } else if (process.platform === "win32") {
-    await symlink(path.join(poetryHome, "bin", "poetry"), path.join(".venv", "Scripts", "poetry.exe"));
+    await fs.symlink(path.join(poetryHome, "bin", "poetry"), path.join(".venv", "Scripts", "poetry.exe"));
   }
 
 }

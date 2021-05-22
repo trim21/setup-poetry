@@ -10,7 +10,7 @@ import {
   createSymlink,
   createVenv,
   getLatestPoetryVersion,
-  getPythonVersion
+  getPythonVersion,
 } from "./utils";
 
 async function run(): Promise<void> {
