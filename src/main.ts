@@ -7,7 +7,7 @@ import { exec } from "@actions/exec";
 import { getLatestPoetryVersion, getPythonVersion, getTmpDir } from "./utils";
 import * as cache from "./cache";
 
-async function run (): Promise<void> {
+async function run(): Promise<void> {
   let installedVersion = core.getInput("version");
   // const preview = core.getInput('preview')
   const tmpDir = getTmpDir();
