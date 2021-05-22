@@ -4,14 +4,15 @@ import * as path from "path";
 import * as core from "@actions/core";
 import { exec } from "@actions/exec";
 
-import { getLatestPoetryVersion, getPythonVersion, getTmpDir } from "./utils";
-import * as cache from "./cache";
+import { getLatestPoetryVersion, getTmpDir } from "./utils";
+
+// import * as cache from "./cache";
 
 async function run(): Promise<void> {
   let installedVersion = core.getInput("version");
   // const preview = core.getInput('preview')
   const tmpDir = getTmpDir();
-  const pythonVersion = await getPythonVersion();
+  // const pythonVersion = await getPythonVersion();
 
   if (!installedVersion) {
     installedVersion = await getLatestPoetryVersion();
