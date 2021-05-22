@@ -50,5 +50,4 @@ export async function createSymlink(poetryHome: string) {
   } else if (process.platform === "win32") {
     await fs.symlink(path.join(poetryHome, "bin", "poetry"), path.join(".venv", "Scripts", "poetry.exe"));
   }
-
 }
