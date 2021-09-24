@@ -24,15 +24,16 @@ jobs:
         id: restore-cache
         with:
           path: ./node_modules
-          key: node-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
+          key: yarn-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
 
-      - run: npm ci
+      - run: yarn
         if: steps.restore-cache.outputs.cache-hit != 'true'
 
-      - run: npm run test
+      - run: yarn lint
+      - run: yarn test
       - run: bash <(curl -s https://codecov.io/bash)
 
-      - run: npm run all
+      - run: yarn build
 
       - uses: actions/upload-artifact@v2
         with:

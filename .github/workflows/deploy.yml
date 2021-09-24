@@ -22,12 +22,12 @@ jobs:
         id: cache
         with:
           path: ./node_modules
-          key: node-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
+          key: yarn-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
 
-      - run: npm ci
+      - run: yarn
         if: steps.cache.outputs.cache-hit != 'true'
 
-      - run: npm run pack
+      - run: yarn build
 
       - run: |
           mkdir dist/dist

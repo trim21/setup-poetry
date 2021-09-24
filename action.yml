@@ -1,9 +1,9 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Setup python-poetry'
+description: 'install poetry in a venv'
+author: 'Trim21 <trim21.me@gmail.com>'
 inputs:
-  version:              # change this
-    description: 'input description here'
+  version:
+    description: 'expected poeotry version'
     default: ''
     required: false
 
