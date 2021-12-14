@@ -18,27 +18,27 @@
     "node": ">=12.x"
   },
   "dependencies": {
-    "@actions/cache": "1.0.7",
+    "@actions/cache": "1.0.8",
     "@actions/core": "1.6.0",
     "@actions/exec": "1.1.0",
     "@actions/http-client": "1.0.11"
   },
   "devDependencies": {
-    "@types/jest": "27.0.2",
-    "@types/node": "16.11.7",
-    "@typescript-eslint/eslint-plugin": "5.4.0",
-    "@typescript-eslint/parser": "5.4.0",
-    "eslint": "8.2.0",
+    "@types/jest": "27.0.3",
+    "@types/node": "16.11.13",
+    "@typescript-eslint/eslint-plugin": "5.7.0",
+    "@typescript-eslint/parser": "5.7.0",
+    "eslint": "8.4.1",
     "eslint-plugin-import": "2.25.3",
-    "eslint-plugin-jest": "25.2.4",
+    "eslint-plugin-jest": "25.3.0",
     "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-promise": "5.1.1",
-    "jest": "27.3.1",
-    "jest-circus": "27.3.1",
-    "ts-jest": "27.0.7",
+    "eslint-plugin-promise": "5.2.0",
+    "jest": "27.4.5",
+    "jest-circus": "27.4.5",
+    "ts-jest": "27.1.1",
     "ts-loader": "9.2.6",
-    "typescript": "4.4.4",
-    "webpack": "5.64.1",
+    "typescript": "4.5.4",
+    "webpack": "5.65.0",
     "webpack-cli": "4.9.1"
   }
 }
