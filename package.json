@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=12.x"
+    "node": ">=16.x"
   },
   "dependencies": {
     "@actions/cache": "1.0.9",
