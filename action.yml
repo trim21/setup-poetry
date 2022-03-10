@@ -1,12 +1,12 @@
-name: 'Setup python-poetry'
-description: 'install poetry in a venv'
-author: 'Trim21 <trim21.me@gmail.com>'
+name: "Setup python-poetry"
+description: "install poetry in a venv"
+author: "Trim21 <trim21.me@gmail.com>"
 inputs:
   version:
-    description: 'expected poeotry version'
-    default: ''
+    description: "expected poeotry version"
+    default: ""
     required: false
 
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: "node16"
+  main: "dist/index.js"

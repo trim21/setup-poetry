@@ -5026,11 +5026,13 @@ function copyFile(srcFile, destFile, force) {
 
 /***/ }),
 
-/***/ "./node_modules/@azure/core-asynciterator-polyfill/dist-esm/index.js":
+/***/ "./node_modules/@azure/core-asynciterator-polyfill/dist/index.js":
 /***/ (() => {
 
 "use strict";
 
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 if (typeof Symbol === undefined || !Symbol.asyncIterator) {
     Symbol.asyncIterator = Symbol.for("Symbol.asyncIterator");
 }
@@ -5798,15 +5800,18 @@ __webpack_require__.d(mappers_namespaceObject, {
   "UserDelegationKey": () => (UserDelegationKey)
 });
 
-// EXTERNAL MODULE: external "util"
-var external_util_ = __webpack_require__("util");
-var external_util_default = /*#__PURE__*/__webpack_require__.n(external_util_);
-;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/util/inspect.js
+;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/util/serializer.common.js
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
-const custom = external_util_.inspect.custom;
-//# sourceMappingURL=inspect.js.map
+/**
+ * Default key used to access the XML attributes.
+ */
+const XML_ATTRKEY = "$";
+/**
+ * Default key used to access the XML value content.
+ */
+const XML_CHARKEY = "_";
+//# sourceMappingURL=serializer.common.js.map
 // EXTERNAL MODULE: external "crypto"
 var external_crypto_ = __webpack_require__("crypto");
 var external_crypto_default = /*#__PURE__*/__webpack_require__.n(external_crypto_);
@@ -5888,18 +5893,6 @@ function v4(options, buf, offset) {
 }
 
 /* harmony default export */ const esm_node_v4 = (v4);
-;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/util/serializer.common.js
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
-/**
- * Default key used to access the XML attributes.
- */
-const XML_ATTRKEY = "$";
-/**
- * Default key used to access the XML value content.
- */
-const XML_CHARKEY = "_";
-//# sourceMappingURL=serializer.common.js.map
 ;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/util/utils.js
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
@@ -6415,6 +6408,10 @@ class URLBuilder {
             }
         }
     }
+    /**
+     * Serializes the URL as a string.
+     * @returns the URL as a string.
+     */
     toString() {
         let result = "";
         if (this._scheme) {
@@ -6450,6 +6447,9 @@ class URLBuilder {
             this.setQuery(replaceAll(this.getQuery(), searchValue, replaceValue));
         }
     }
+    /**
+     * Parses a given string URL into a new {@link URLBuilder}.
+     */
     static parse(text) {
         const result = new URLBuilder();
         result.set(text, "SCHEME_OR_HOST");
@@ -6750,7 +6750,7 @@ const defaultAllowedHeaderNames = [
     "Retry-After",
     "Server",
     "Transfer-Encoding",
-    "User-Agent"
+    "User-Agent",
 ];
 const defaultAllowedQueryParameters = ["api-version"];
 class Sanitizer {
@@ -6843,12 +6843,24 @@ class Sanitizer {
     }
 }
 //# sourceMappingURL=sanitizer.js.map
+// EXTERNAL MODULE: external "util"
+var external_util_ = __webpack_require__("util");
+var external_util_default = /*#__PURE__*/__webpack_require__.n(external_util_);
+;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/util/inspect.js
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+const custom = external_util_.inspect.custom;
+//# sourceMappingURL=inspect.js.map
 ;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/restError.js
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
 
 const errorSanitizer = new Sanitizer();
+/**
+ * An error resulting from an HTTP request to a service endpoint.
+ */
 class RestError extends Error {
     constructor(message, code, statusCode, request, response) {
         super(message);
@@ -6866,7 +6878,13 @@ class RestError extends Error {
         return `RestError: ${this.message} \n ${errorSanitizer.sanitize(this)}`;
     }
 }
+/**
+ * A constant string to identify errors that may arise when making an HTTP request that indicates an issue with the transport layer (e.g. the hostname of the URL cannot be resolved via DNS.)
+ */
 RestError.REQUEST_SEND_ERROR = "REQUEST_SEND_ERROR";
+/**
+ * A constant string to identify errors that may arise from parsing an incoming HTTP response. Usually indicates a malformed HTTP body, such as an encoded JSON payload that is incomplete.
+ */
 RestError.PARSE_ERROR = "PARSE_ERROR";
 //# sourceMappingURL=restError.js.map
 ;// CONCATENATED MODULE: ./node_modules/tslib/tslib.es6.js
@@ -7160,8 +7178,22 @@ var HttpPipelineLogLevel;
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/**
+ * The base class from which all request policies derive.
+ */
 class BaseRequestPolicy {
-    constructor(_nextPolicy, _options) {
+    /**
+     * The main method to implement that manipulates a request/response.
+     */
+    constructor(
+    /**
+     * The next policy in the pipeline. Each policy is responsible for executing the next one if the request is to continue through the pipeline.
+     */
+    _nextPolicy, 
+    /**
+     * The options that can be passed to a given request policy.
+     */
+    _options) {
         this._nextPolicy = _nextPolicy;
         this._options = _options;
     }
@@ -7216,11 +7248,14 @@ class RequestPolicyOptions {
 ;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/util/constants.js
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
+/**
+ * A set of constants used internally when processing requests.
+ */
 const constants_Constants = {
     /**
      * The core-http version
      */
-    coreHttpVersion: "2.2.2",
+    coreHttpVersion: "2.2.4",
     /**
      * Specifies HTTP.
      */
@@ -7256,12 +7291,12 @@ const constants_Constants = {
             POST: "POST",
             MERGE: "MERGE",
             HEAD: "HEAD",
-            PATCH: "PATCH"
+            PATCH: "PATCH",
         },
         StatusCodes: {
             TooManyRequests: 429,
-            ServiceUnavailable: 503
-        }
+            ServiceUnavailable: 503,
+        },
     },
     /**
      * Defines constants for use with HTTP headers.
@@ -7281,8 +7316,8 @@ const constants_Constants = {
         /**
          * The UserAgent header.
          */
-        USER_AGENT: "User-Agent"
-    }
+        USER_AGENT: "User-Agent",
+    },
 };
 //# sourceMappingURL=constants.js.map
 ;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/policies/proxyPolicy.js
@@ -7359,6 +7394,11 @@ function loadNoProxy() {
     }
     return [];
 }
+/**
+ * Converts a given URL of a proxy server into `ProxySettings` or attempts to retrieve `ProxySettings` from the current environment if one is not passed.
+ * @param proxyUrl - URL of the proxy
+ * @returns The default proxy settings, or undefined.
+ */
 function getDefaultProxySettings(proxyUrl) {
     if (!proxyUrl) {
         proxyUrl = loadEnvironmentProxyValue();
@@ -7373,7 +7413,7 @@ function getDefaultProxySettings(proxyUrl) {
         host: schema + parsedUrl.getHost(),
         port: Number.parseInt(parsedUrl.getPort() || "80"),
         username,
-        password
+        password,
     };
 }
 /**
@@ -7393,7 +7433,7 @@ function proxyPolicy_proxyPolicy(proxySettings, options) {
     return {
         create: (nextPolicy, requestPolicyOptions) => {
             return new ProxyPolicy(nextPolicy, requestPolicyOptions, proxySettings, options === null || options === void 0 ? void 0 : options.customNoProxyList);
-        }
+        },
     };
 }
 function extractAuthFromUrl(url) {
@@ -7412,7 +7452,7 @@ function extractAuthFromUrl(url) {
     return {
         username,
         password,
-        urlWithoutAuth
+        urlWithoutAuth,
     };
 }
 class ProxyPolicy extends BaseRequestPolicy {
@@ -7504,7 +7544,7 @@ var _globalThis = typeof globalThis === 'object' ? globalThis : global;
  * limitations under the License.
  */
 // this is autogenerated file, see scripts/version-update.js
-var VERSION = '1.0.3';
+var VERSION = '1.0.4';
 //# sourceMappingURL=version.js.map
 ;// CONCATENATED MODULE: ./node_modules/@opentelemetry/api/build/esm/internal/semver.js
 /*
@@ -7880,14 +7920,15 @@ var DiagAPI = /** @class */ (function () {
     function DiagAPI() {
         function _logProxy(funcName) {
             return function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
                 var logger = getGlobal('diag');
                 // shortcut if logger not set
                 if (!logger)
                     return;
-                return logger[funcName].apply(logger, 
-                // work around Function.prototype.apply types
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                arguments);
+                return logger[funcName].apply(logger, args);
             };
         }
         // Using self local variable for minification purposes as 'this' cannot be minified
@@ -8100,17 +8141,22 @@ var DiagConsoleLogger = /** @class */ (function () {
     function DiagConsoleLogger() {
         function _consoleFunc(funcName) {
             return function () {
-                var orgArguments = arguments;
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
                 if (console) {
                     // Some environments only expose the console when the F12 developer console is open
+                    // eslint-disable-next-line no-console
                     var theFunc = console[funcName];
                     if (typeof theFunc !== 'function') {
                         // Not all environments support all functions
+                        // eslint-disable-next-line no-console
                         theFunc = console.log;
                     }
                     // One last final check
                     if (typeof theFunc === 'function') {
-                        return theFunc.apply(console, orgArguments);
+                        return theFunc.apply(console, args);
                     }
                 }
             };
@@ -9334,6 +9380,8 @@ var interfaces_SpanStatusCode;
 })(interfaces_SpanStatusCode || (interfaces_SpanStatusCode = {}));
 //# sourceMappingURL=interfaces.js.map
 ;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/operationOptions.js
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 
 /**
  * Converts an OperationOptions to a RequestOptionsBase
@@ -9390,18 +9438,38 @@ function decodeString(value) {
 
 
 
+// This file contains utility code to serialize and deserialize network operations according to `OperationSpec` objects generated by AutoRest.TypeScript from OpenAPI specifications.
+/**
+ * Used to map raw response objects to final shapes.
+ * Helps packing and unpacking Dates and other encoded types that are not intrinsic to JSON.
+ * Also allows pulling values from headers, as well as inserting default values and constants.
+ */
 class Serializer {
-    constructor(modelMappers = {}, isXML) {
+    constructor(
+    /**
+     * The provided model mapper.
+     */
+    modelMappers = {}, 
+    /**
+     * Whether the contents are XML or not.
+     */
+    isXML) {
         this.modelMappers = modelMappers;
         this.isXML = isXML;
     }
+    /**
+     * Validates constraints, if any. This function will throw if the provided value does not respect those constraints.
+     * @param mapper - The definition of data models.
+     * @param value - The value.
+     * @param objectName - Name of the object. Used in the error messages.
+     */
     validateConstraints(mapper, value, objectName) {
         const failValidation = (constraintName, constraintValue) => {
             throw new Error(`"${objectName}" with value "${value}" should satisfy the constraint "${constraintName}": ${constraintValue}.`);
         };
         if (mapper.constraints && value != undefined) {
             const valueAsNumber = value;
-            const { ExclusiveMaximum, ExclusiveMinimum, InclusiveMaximum, InclusiveMinimum, MaxItems, MaxLength, MinItems, MinLength, MultipleOf, Pattern, UniqueItems } = mapper.constraints;
+            const { ExclusiveMaximum, ExclusiveMinimum, InclusiveMaximum, InclusiveMinimum, MaxItems, MaxLength, MinItems, MinLength, MultipleOf, Pattern, UniqueItems, } = mapper.constraints;
             if (ExclusiveMaximum != undefined && valueAsNumber >= ExclusiveMaximum) {
                 failValidation("ExclusiveMaximum", ExclusiveMaximum);
             }
@@ -9443,20 +9511,20 @@ class Serializer {
         }
     }
     /**
-     * Serialize the given object based on its metadata defined in the mapper
+     * Serialize the given object based on its metadata defined in the mapper.
      *
-     * @param mapper - The mapper which defines the metadata of the serializable object
-     * @param object - A valid Javascript object to be serialized
-     * @param objectName - Name of the serialized object
-     * @param options - additional options to deserialization
-     * @returns A valid serialized Javascript object
+     * @param mapper - The mapper which defines the metadata of the serializable object.
+     * @param object - A valid Javascript object to be serialized.
+     * @param objectName - Name of the serialized object.
+     * @param options - additional options to deserialization.
+     * @returns A valid serialized Javascript object.
      */
     serialize(mapper, object, objectName, options = {}) {
         var _a, _b, _c;
         const updatedOptions = {
             rootName: (_a = options.rootName) !== null && _a !== void 0 ? _a : "",
             includeRoot: (_b = options.includeRoot) !== null && _b !== void 0 ? _b : false,
-            xmlCharKey: (_c = options.xmlCharKey) !== null && _c !== void 0 ? _c : XML_CHARKEY
+            xmlCharKey: (_c = options.xmlCharKey) !== null && _c !== void 0 ? _c : XML_CHARKEY,
         };
         let payload = {};
         const mapperType = mapper.type.name;
@@ -9526,20 +9594,20 @@ class Serializer {
         return payload;
     }
     /**
-     * Deserialize the given object based on its metadata defined in the mapper
+     * Deserialize the given object based on its metadata defined in the mapper.
      *
-     * @param mapper - The mapper which defines the metadata of the serializable object
-     * @param responseBody - A valid Javascript entity to be deserialized
-     * @param objectName - Name of the deserialized object
+     * @param mapper - The mapper which defines the metadata of the serializable object.
+     * @param responseBody - A valid Javascript entity to be deserialized.
+     * @param objectName - Name of the deserialized object.
      * @param options - Controls behavior of XML parser and builder.
-     * @returns A valid deserialized Javascript object
+     * @returns A valid deserialized Javascript object.
      */
     deserialize(mapper, responseBody, objectName, options = {}) {
         var _a, _b, _c;
         const updatedOptions = {
             rootName: (_a = options.rootName) !== null && _a !== void 0 ? _a : "",
             includeRoot: (_b = options.includeRoot) !== null && _b !== void 0 ? _b : false,
-            xmlCharKey: (_c = options.xmlCharKey) !== null && _c !== void 0 ? _c : XML_CHARKEY
+            xmlCharKey: (_c = options.xmlCharKey) !== null && _c !== void 0 ? _c : XML_CHARKEY,
         };
         if (responseBody == undefined) {
             if (this.isXML && mapper.type.name === "Sequence" && !mapper.xmlIsWrapped) {
@@ -9638,9 +9706,7 @@ function bufferToBase64Url(buffer) {
     // Uint8Array to Base64.
     const str = encodeByteArray(buffer);
     // Base64 to Base64Url.
-    return trimEnd(str, "=")
-        .replace(/\+/g, "-")
-        .replace(/\//g, "_");
+    return trimEnd(str, "=").replace(/\+/g, "-").replace(/\//g, "_");
 }
 function base64UrlToByteArray(str) {
     if (!str) {
@@ -9856,10 +9922,10 @@ function serializeDictionaryType(serializer, mapper, object, objectName, isXml, 
     return tempDictionary;
 }
 /**
- * Resolves the additionalProperties property from a referenced mapper
- * @param serializer - The serializer containing the entire set of mappers
- * @param mapper - The composite mapper to resolve
- * @param objectName - Name of the object being serialized
+ * Resolves the additionalProperties property from a referenced mapper.
+ * @param serializer - The serializer containing the entire set of mappers.
+ * @param mapper - The composite mapper to resolve.
+ * @param objectName - Name of the object being serialized.
  */
 function resolveAdditionalProperties(serializer, mapper, objectName) {
     const additionalProperties = mapper.type.additionalProperties;
@@ -9870,7 +9936,7 @@ function resolveAdditionalProperties(serializer, mapper, objectName) {
     return additionalProperties;
 }
 /**
- * Finds the mapper referenced by className
+ * Finds the mapper referenced by `className`.
  * @param serializer - The serializer containing the entire set of mappers
  * @param mapper - The composite mapper to resolve
  * @param objectName - Name of the object being serialized
@@ -10209,7 +10275,9 @@ function getPolymorphicDiscriminatorSafely(serializer, typeName) {
         serializer.modelMappers[typeName] &&
         serializer.modelMappers[typeName].type.polymorphicDiscriminator);
 }
-// TODO: why is this here?
+/**
+ * Utility function that serializes an object that might contain binary information into a plain object, array or a string.
+ */
 function serializeObject(toSerialize) {
     const castToSerialize = toSerialize;
     if (toSerialize == undefined)
@@ -10247,6 +10315,9 @@ function strEnum(o) {
     }
     return result;
 }
+/**
+ * String enum containing the string types of property mappers.
+ */
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 const MapperType = strEnum([
     "Base64Url",
@@ -10264,7 +10335,7 @@ const MapperType = strEnum([
     "String",
     "Stream",
     "TimeSpan",
-    "UnixTime"
+    "UnixTime",
 ]);
 //# sourceMappingURL=serializer.js.map
 ;// CONCATENATED MODULE: ./node_modules/@azure/storage-blob/dist-esm/storage-blob/src/generated/src/models/mappers.js
@@ -18377,10 +18448,25 @@ const BlockBlobGetBlockListExceptionHeaders = {
  */
 var QueryCollectionFormat;
 (function (QueryCollectionFormat) {
+    /**
+     * CSV: Each pair of segments joined by a single comma.
+     */
     QueryCollectionFormat["Csv"] = ",";
+    /**
+     * SSV: Each pair of segments joined by a single space character.
+     */
     QueryCollectionFormat["Ssv"] = " ";
+    /**
+     * TSV: Each pair of segments joined by a single tab character.
+     */
     QueryCollectionFormat["Tsv"] = "\t";
+    /**
+     * Pipes: Each pair of segments joined by a single pipe character.
+     */
     QueryCollectionFormat["Pipes"] = "|";
+    /**
+     * Denotes this is an array of values that should be passed to the server in multiple key/value pairs, e.g. `?queryParam=value1&queryParam=value2`
+     */
     QueryCollectionFormat["Multi"] = "Multi";
 })(QueryCollectionFormat || (QueryCollectionFormat = {}));
 //# sourceMappingURL=queryCollectionFormat.js.map
@@ -21096,18 +21182,18 @@ const xml2jsDefaultOptionsV2 = {
     xmldec: {
         version: "1.0",
         encoding: "UTF-8",
-        standalone: true
+        standalone: true,
     },
     doctype: undefined,
     renderOpts: {
         pretty: true,
         indent: "  ",
-        newline: "\n"
+        newline: "\n",
     },
     headless: false,
     chunkSize: 10000,
     emptyTag: "",
-    cdata: false
+    cdata: false,
 };
 // The xml2js settings for general XML parsing operations.
 const xml2jsParserSettings = Object.assign({}, xml2jsDefaultOptionsV2);
@@ -21116,7 +21202,7 @@ xml2jsParserSettings.explicitArray = false;
 const xml2jsBuilderSettings = Object.assign({}, xml2jsDefaultOptionsV2);
 xml2jsBuilderSettings.explicitArray = false;
 xml2jsBuilderSettings.renderOpts = {
-    pretty: false
+    pretty: false,
 };
 /**
  * Converts given JSON object to XML string
@@ -21173,7 +21259,7 @@ function deserializationPolicy_deserializationPolicy(deserializationContentTypes
     return {
         create: (nextPolicy, options) => {
             return new DeserializationPolicy(nextPolicy, options, deserializationContentTypes, parsingOptions);
-        }
+        },
     };
 }
 const defaultJsonContentTypes = ["application/json", "text/json"];
@@ -21181,8 +21267,8 @@ const defaultXmlContentTypes = ["application/xml", "application/atom+xml"];
 const deserializationPolicy_DefaultDeserializationOptions = {
     expectedContentTypes: {
         json: defaultJsonContentTypes,
-        xml: defaultXmlContentTypes
-    }
+        xml: defaultXmlContentTypes,
+    },
 };
 /**
  * A RequestPolicy that will deserialize HTTP response bodies and headers as they pass through the
@@ -21200,7 +21286,7 @@ class DeserializationPolicy extends BaseRequestPolicy {
     }
     async sendRequest(request) {
         return this._nextPolicy.sendRequest(request).then((response) => deserializeResponseBody(this.jsonContentTypes, this.xmlContentTypes, response, {
-            xmlCharKey: this.xmlCharKey
+            xmlCharKey: this.xmlCharKey,
         }));
     }
 }
@@ -21233,12 +21319,20 @@ function shouldDeserializeResponse(parsedResponse) {
     }
     return result;
 }
+/**
+ * Given a particular set of content types to parse as either JSON or XML, consumes the HTTP response to produce the result object defined by the request's {@link OperationSpec}.
+ * @param jsonContentTypes - Response content types to parse the body as JSON.
+ * @param xmlContentTypes  - Response content types to parse the body as XML.
+ * @param response - HTTP Response from the pipeline.
+ * @param options  - Options to the serializer, mostly for configuring the XML parser if needed.
+ * @returns A parsed {@link HttpOperationResponse} object that can be returned by the {@link ServiceClient}.
+ */
 function deserializeResponseBody(jsonContentTypes, xmlContentTypes, response, options = {}) {
     var _a, _b, _c;
     const updatedOptions = {
         rootName: (_a = options.rootName) !== null && _a !== void 0 ? _a : "",
         includeRoot: (_b = options.includeRoot) !== null && _b !== void 0 ? _b : false,
-        xmlCharKey: (_c = options.xmlCharKey) !== null && _c !== void 0 ? _c : XML_CHARKEY
+        xmlCharKey: (_c = options.xmlCharKey) !== null && _c !== void 0 ? _c : XML_CHARKEY,
     };
     return parse(jsonContentTypes, xmlContentTypes, response, updatedOptions).then((parsedResponse) => {
         if (!shouldDeserializeResponse(parsedResponse)) {
@@ -21437,7 +21531,7 @@ class httpHeaders_HttpHeaders {
     set(headerName, headerValue) {
         this._headersMap[getHeaderKey(headerName)] = {
             name: headerName,
-            value: headerValue.toString()
+            value: headerValue.toString(),
         };
     }
     /**
@@ -21469,12 +21563,7 @@ class httpHeaders_HttpHeaders {
      * Get the headers that are contained this collection as an object.
      */
     rawHeaders() {
-        const result = {};
-        for (const headerKey in this._headersMap) {
-            const header = this._headersMap[headerKey];
-            result[header.name.toLowerCase()] = header.value;
-        }
-        return result;
+        return this.toJson({ preserveCase: true });
     }
     /**
      * Get the headers that are contained in this collection as an array.
@@ -21511,14 +21600,27 @@ class httpHeaders_HttpHeaders {
     /**
      * Get the JSON object representation of this HTTP header collection.
      */
-    toJson() {
-        return this.rawHeaders();
+    toJson(options = {}) {
+        const result = {};
+        if (options.preserveCase) {
+            for (const headerKey in this._headersMap) {
+                const header = this._headersMap[headerKey];
+                result[header.name] = header.value;
+            }
+        }
+        else {
+            for (const headerKey in this._headersMap) {
+                const header = this._headersMap[headerKey];
+                result[getHeaderKey(header.name)] = header.value;
+            }
+        }
+        return result;
     }
     /**
      * Get the string representation of this HTTP header collection.
      */
     toString() {
-        return JSON.stringify(this.toJson());
+        return JSON.stringify(this.toJson({ preserveCase: true }));
     }
     /**
      * Create a deep clone/copy of this HttpHeaders collection.
@@ -22132,18 +22234,25 @@ const log_logger = createClientLogger("core-http");
 
 
 
-
 const createSpan = createSpanFunction({
     packagePrefix: "",
-    namespace: ""
+    namespace: "",
 });
+/**
+ * Creates a policy that wraps outgoing requests with a tracing span.
+ * @param tracingOptions - Tracing options.
+ * @returns An instance of the {@link TracingPolicy} class.
+ */
 function tracingPolicy_tracingPolicy(tracingOptions = {}) {
     return {
         create(nextPolicy, options) {
             return new TracingPolicy(nextPolicy, options, tracingOptions);
-        }
+        },
     };
 }
+/**
+ * A policy that wraps outgoing requests with a tracing span.
+ */
 class TracingPolicy extends BaseRequestPolicy {
     constructor(nextPolicy, options, tracingOptions) {
         super(nextPolicy, options);
@@ -22170,14 +22279,13 @@ class TracingPolicy extends BaseRequestPolicy {
     tryCreateSpan(request) {
         var _a;
         try {
-            const path = URLBuilder.parse(request.url).getPath() || "/";
             // Passing spanOptions as part of tracingOptions to maintain compatibility @azure/core-tracing@preview.13 and earlier.
             // We can pass this as a separate parameter once we upgrade to the latest core-tracing.
-            const { span } = createSpan(path, {
+            const { span } = createSpan(`HTTP ${request.method}`, {
                 tracingOptions: {
                     spanOptions: Object.assign(Object.assign({}, request.spanOptions), { kind: interfaces_SpanKind.CLIENT }),
-                    tracingContext: request.tracingContext
-                }
+                    tracingContext: request.tracingContext,
+                },
             });
             // If the span is not recording, don't do any more work.
             if (!span.isRecording()) {
@@ -22191,7 +22299,7 @@ class TracingPolicy extends BaseRequestPolicy {
             span.setAttributes({
                 "http.method": request.method,
                 "http.url": request.url,
-                requestId: request.requestId
+                requestId: request.requestId,
             });
             if (this.userAgent) {
                 span.setAttribute("http.user_agent", this.userAgent);
@@ -22218,7 +22326,7 @@ class TracingPolicy extends BaseRequestPolicy {
         try {
             span.setStatus({
                 code: interfaces_SpanStatusCode.ERROR,
-                message: err.message
+                message: err.message,
             });
             if (err.statusCode) {
                 span.setAttribute("http.status_code", err.statusCode);
@@ -22237,7 +22345,7 @@ class TracingPolicy extends BaseRequestPolicy {
                 span.setAttribute("serviceRequestId", serviceRequestId);
             }
             span.setStatus({
-                code: interfaces_SpanStatusCode.OK
+                code: interfaces_SpanStatusCode.OK,
             });
             span.end();
         }
@@ -22251,14 +22359,22 @@ class TracingPolicy extends BaseRequestPolicy {
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/**
+ * By default, HTTP connections are maintained for future requests.
+ */
 const keepAlivePolicy_DefaultKeepAliveOptions = {
-    enable: true
+    enable: true,
 };
+/**
+ * Creates a policy that controls whether HTTP connections are maintained on future requests.
+ * @param keepAliveOptions - Keep alive options. By default, HTTP connections are maintained for future requests.
+ * @returns An instance of the {@link KeepAlivePolicy}
+ */
 function keepAlivePolicy_keepAlivePolicy(keepAliveOptions) {
     return {
         create: (nextPolicy, options) => {
             return new KeepAlivePolicy(nextPolicy, options, keepAliveOptions || keepAlivePolicy_DefaultKeepAliveOptions);
-        }
+        },
     };
 }
 /**
@@ -22292,11 +22408,15 @@ class KeepAlivePolicy extends BaseRequestPolicy {
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/**
+ * Creates a policy that assigns a unique request id to outgoing requests.
+ * @param requestIdHeaderName - The name of the header to use when assigning the unique id to the request.
+ */
 function generateClientRequestIdPolicy_generateClientRequestIdPolicy(requestIdHeaderName = "x-ms-client-request-id") {
     return {
         create: (nextPolicy, options) => {
             return new GenerateClientRequestIdPolicy(nextPolicy, options, requestIdHeaderName);
-        }
+        },
     };
 }
 class GenerateClientRequestIdPolicy extends BaseRequestPolicy {
@@ -22318,15 +22438,23 @@ class GenerateClientRequestIdPolicy extends BaseRequestPolicy {
 
 
 
+/**
+ * Creates a policy that logs information about the outgoing request and the incoming responses.
+ * @param loggingOptions - Logging options.
+ * @returns An instance of the {@link LogPolicy}
+ */
 function logPolicy_logPolicy(loggingOptions = {}) {
     return {
         create: (nextPolicy, options) => {
             return new LogPolicy(nextPolicy, options, loggingOptions);
-        }
+        },
     };
 }
+/**
+ * A policy that logs information about the outgoing request and the incoming responses.
+ */
 class LogPolicy extends BaseRequestPolicy {
-    constructor(nextPolicy, options, { logger = log_logger.info, allowedHeaderNames = [], allowedQueryParameters = [] } = {}) {
+    constructor(nextPolicy, options, { logger = log_logger.info, allowedHeaderNames = [], allowedQueryParameters = [], } = {}) {
         super(nextPolicy, options);
         this.logger = logger;
         this.sanitizer = new Sanitizer({ allowedHeaderNames, allowedQueryParameters });
@@ -22395,7 +22523,7 @@ function disableResponseDecompressionPolicy_disableResponseDecompressionPolicy()
     return {
         create: (nextPolicy, options) => {
             return new DisableResponseDecompressionPolicy(nextPolicy, options);
-        }
+        },
     };
 }
 /**
@@ -22426,18 +22554,6 @@ class DisableResponseDecompressionPolicy extends BaseRequestPolicy {
     }
 }
 //# sourceMappingURL=disableResponseDecompressionPolicy.js.map
-;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/util/typeguards.js
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
-/**
- * Helper TypeGuard that checks if the value is not null or undefined.
- * @param thing - Anything
- * @internal
- */
-function isDefined(thing) {
-    return typeof thing !== "undefined" && thing !== null;
-}
-//# sourceMappingURL=typeguards.js.map
 ;// CONCATENATED MODULE: ./node_modules/@azure/abort-controller/dist-esm/src/AbortSignal.js
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
@@ -22695,6 +22811,18 @@ var AbortController = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=AbortController.js.map
+;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/util/typeguards.js
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+/**
+ * Helper TypeGuard that checks if the value is not null or undefined.
+ * @param thing - Anything
+ * @internal
+ */
+function isDefined(thing) {
+    return typeof thing !== "undefined" && thing !== null;
+}
+//# sourceMappingURL=typeguards.js.map
 ;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/util/delay.js
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
@@ -22752,7 +22880,7 @@ function delay(delayInMs, value, options) {
 const DEFAULT_CYCLER_OPTIONS = {
     forcedRefreshWindowInMs: 1000,
     retryIntervalInMs: 3000,
-    refreshWindowInMs: 1000 * 60 * 2 // Start refreshing 2m before expiry
+    refreshWindowInMs: 1000 * 60 * 2, // Start refreshing 2m before expiry
 };
 /**
  * Converts an an unreliable access token getter (which may resolve with null)
@@ -22840,7 +22968,7 @@ function createTokenCycler(credential, scopes, tokenCyclerOptions) {
          */
         get mustRefresh() {
             return (token === null || token.expiresOnTimestamp - options.forcedRefreshWindowInMs < Date.now());
-        }
+        },
     };
     /**
      * Starts a refresh job or returns the existing job if one is already
@@ -22912,8 +23040,8 @@ function bearerTokenAuthenticationPolicy(credential, scopes) {
             const { token } = await getToken({
                 abortSignal: webResource.abortSignal,
                 tracingOptions: {
-                    tracingContext: webResource.tracingContext
-                }
+                    tracingContext: webResource.tracingContext,
+                },
             });
             webResource.headers.set(constants_Constants.HeaderConstants.AUTHORIZATION, `Bearer ${token}`);
             return this._nextPolicy.sendRequest(webResource);
@@ -22922,7 +23050,7 @@ function bearerTokenAuthenticationPolicy(credential, scopes) {
     return {
         create: (nextPolicy, options) => {
             return new BearerTokenAuthenticationPolicy(nextPolicy, options);
-        }
+        },
     };
 }
 //# sourceMappingURL=bearerTokenAuthenticationPolicy.js.map
@@ -24249,14 +24377,77 @@ class TelemetryPolicyFactory {
     }
 }
 //# sourceMappingURL=TelemetryPolicyFactory.js.map
-// EXTERNAL MODULE: ./node_modules/tough-cookie/lib/cookie.js
-var cookie = __webpack_require__("./node_modules/tough-cookie/lib/cookie.js");
 // EXTERNAL MODULE: external "http"
 var external_http_ = __webpack_require__("http");
 // EXTERNAL MODULE: external "https"
 var external_https_ = __webpack_require__("https");
+// EXTERNAL MODULE: ./node_modules/tough-cookie/lib/cookie.js
+var cookie = __webpack_require__("./node_modules/tough-cookie/lib/cookie.js");
+// EXTERNAL MODULE: ./node_modules/tunnel/index.js
+var tunnel = __webpack_require__("./node_modules/tunnel/index.js");
+;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/proxyAgent.js
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+
+function createProxyAgent(requestUrl, proxySettings, headers) {
+    const host = URLBuilder.parse(proxySettings.host).getHost();
+    if (!host) {
+        throw new Error("Expecting a non-empty host in proxy settings.");
+    }
+    if (!isValidPort(proxySettings.port)) {
+        throw new Error("Expecting a valid port number in the range of [0, 65535] in proxy settings.");
+    }
+    const tunnelOptions = {
+        proxy: {
+            host: host,
+            port: proxySettings.port,
+            headers: (headers && headers.rawHeaders()) || {},
+        },
+    };
+    if (proxySettings.username && proxySettings.password) {
+        tunnelOptions.proxy.proxyAuth = `${proxySettings.username}:${proxySettings.password}`;
+    }
+    else if (proxySettings.username) {
+        tunnelOptions.proxy.proxyAuth = `${proxySettings.username}`;
+    }
+    const isRequestHttps = isUrlHttps(requestUrl);
+    const isProxyHttps = isUrlHttps(proxySettings.host);
+    const proxyAgent = {
+        isHttps: isRequestHttps,
+        agent: createTunnel(isRequestHttps, isProxyHttps, tunnelOptions),
+    };
+    return proxyAgent;
+}
+function isUrlHttps(url) {
+    const urlScheme = URLBuilder.parse(url).getScheme() || "";
+    return urlScheme.toLowerCase() === "https";
+}
+function createTunnel(isRequestHttps, isProxyHttps, tunnelOptions) {
+    if (isRequestHttps && isProxyHttps) {
+        return tunnel.httpsOverHttps(tunnelOptions);
+    }
+    else if (isRequestHttps && !isProxyHttps) {
+        return tunnel.httpsOverHttp(tunnelOptions);
+    }
+    else if (!isRequestHttps && isProxyHttps) {
+        return tunnel.httpOverHttps(tunnelOptions);
+    }
+    else {
+        return tunnel.httpOverHttp(tunnelOptions);
+    }
+}
+function isValidPort(port) {
+    // any port in 0-65535 range is valid (RFC 793) even though almost all implementations
+    // will reserve 0 for a specific purpose, and a range of numbers for ephemeral ports
+    return 0 <= port && port <= 65535;
+}
+//# sourceMappingURL=proxyAgent.js.map
 // EXTERNAL MODULE: external "stream"
 var external_stream_ = __webpack_require__("stream");
+// EXTERNAL MODULE: ./node_modules/@azure/core-http/node_modules/form-data/lib/form_data.js
+var form_data = __webpack_require__("./node_modules/@azure/core-http/node_modules/form-data/lib/form_data.js");
+var form_data_default = /*#__PURE__*/__webpack_require__.n(form_data);
 // EXTERNAL MODULE: external "url"
 var external_url_ = __webpack_require__("url");
 // EXTERNAL MODULE: ./node_modules/node-fetch/node_modules/whatwg-url/lib/public-api.js
@@ -25665,9 +25856,17 @@ lib_AbortError.prototype = Object.create(Error.prototype);
 lib_AbortError.prototype.constructor = lib_AbortError;
 lib_AbortError.prototype.name = 'AbortError';
 
+const URL$1 = external_url_.URL || public_api.URL;
+
 // fix an issue where "PassThrough", "resolve" aren't a named export for node <10
 const PassThrough$1 = external_stream_.PassThrough;
-const resolve_url = external_url_.resolve;
+
+const isDomainOrSubdomain = function isDomainOrSubdomain(destination, original) {
+	const orig = new URL$1(original).hostname;
+	const dest = new URL$1(destination).hostname;
+
+	return orig === dest || orig[orig.length - dest.length - 1] === '.' && orig.endsWith(dest);
+};
 
 /**
  * Fetch function
@@ -25755,7 +25954,19 @@ function fetch(url, opts) {
 				const location = headers.get('Location');
 
 				// HTTP fetch step 5.3
-				const locationURL = location === null ? null : resolve_url(request.url, location);
+				let locationURL = null;
+				try {
+					locationURL = location === null ? null : new URL$1(location, request.url).toString();
+				} catch (err) {
+					// error here can only be invalid URL in Location: header
+					// do not throw when options.redirect == manual
+					// let the user extract the errorneous redirect URL
+					if (request.redirect !== 'manual') {
+						reject(new FetchError(`uri requested responds with an invalid redirect URL: ${location}`, 'invalid-redirect'));
+						finalize();
+						return;
+					}
+				}
 
 				// HTTP fetch step 5.5
 				switch (request.redirect) {
@@ -25802,6 +26013,12 @@ function fetch(url, opts) {
 							timeout: request.timeout,
 							size: request.size
 						};
+
+						if (!isDomainOrSubdomain(request.url, locationURL)) {
+							for (const name of ['authorization', 'www-authenticate', 'cookie', 'cookie2']) {
+								requestOpts.headers.delete(name);
+							}
+						}
 
 						// HTTP-redirect fetch step 9
 						if (res.statusCode !== 303 && request.body && getTotalBytes(request) === null) {
@@ -25925,10 +26142,7 @@ fetch.Promise = global.Promise;
 /* harmony default export */ const lib = (fetch);
 
 
-// EXTERNAL MODULE: ./node_modules/@azure/core-http/node_modules/form-data/lib/form_data.js
-var form_data = __webpack_require__("./node_modules/@azure/core-http/node_modules/form-data/lib/form_data.js");
-var form_data_default = /*#__PURE__*/__webpack_require__.n(form_data);
-;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/fetchHttpClient.js
+;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/nodeFetchHttpClient.js
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
@@ -25937,6 +26151,14 @@ var form_data_default = /*#__PURE__*/__webpack_require__.n(form_data);
 
 
 
+
+
+
+
+
+function getCachedAgent(isHttps, agentCache) {
+    return isHttps ? agentCache.httpsAgent : agentCache.httpAgent;
+}
 class ReportTransform extends external_stream_.Transform {
     constructor(progressCallback) {
         super();
@@ -25950,7 +26172,44 @@ class ReportTransform extends external_stream_.Transform {
         callback(undefined);
     }
 }
-class FetchHttpClient {
+function isReadableStream(body) {
+    return body && typeof body.pipe === "function";
+}
+function isStreamComplete(stream, aborter) {
+    return new Promise((resolve) => {
+        stream.once("close", () => {
+            aborter === null || aborter === void 0 ? void 0 : aborter.abort();
+            resolve();
+        });
+        stream.once("end", resolve);
+        stream.once("error", resolve);
+    });
+}
+/**
+ * Transforms a set of headers into the key/value pair defined by {@link HttpHeadersLike}
+ */
+function parseHeaders(headers) {
+    const httpHeaders = new httpHeaders_HttpHeaders();
+    headers.forEach((value, key) => {
+        httpHeaders.set(key, value);
+    });
+    return httpHeaders;
+}
+/**
+ * An HTTP client that uses `node-fetch`.
+ */
+class NodeFetchHttpClient {
+    constructor() {
+        // a mapping of proxy settings string `${host}:${port}:${username}:${password}` to agent
+        this.proxyAgentMap = new Map();
+        this.keepAliveAgents = {};
+        this.cookieJar = new cookie/* CookieJar */.US(undefined, { looseMode: true });
+    }
+    /**
+     * Provides minimum viable error handling and the logic that executes the abstract methods.
+     * @param httpRequest - Object representing the outgoing HTTP request.
+     * @returns An object representing the incoming HTTP response.
+     */
     async sendRequest(httpRequest) {
         var _a;
         if (!httpRequest && typeof httpRequest !== "object") {
@@ -26046,7 +26305,7 @@ class FetchHttpClient {
                 readableStreamBody: streaming
                     ? response.body
                     : undefined,
-                bodyAsText: !streaming ? await response.text() : undefined
+                bodyAsText: !streaming ? await response.text() : undefined,
             };
             const onDownloadProgress = httpRequest.onDownloadProgress;
             if (onDownloadProgress) {
@@ -26100,108 +26359,6 @@ class FetchHttpClient {
             }
         }
     }
-}
-function isReadableStream(body) {
-    return body && typeof body.pipe === "function";
-}
-function isStreamComplete(stream, aborter) {
-    return new Promise((resolve) => {
-        stream.once("close", () => {
-            aborter === null || aborter === void 0 ? void 0 : aborter.abort();
-            resolve();
-        });
-        stream.once("end", resolve);
-        stream.once("error", resolve);
-    });
-}
-function parseHeaders(headers) {
-    const httpHeaders = new httpHeaders_HttpHeaders();
-    headers.forEach((value, key) => {
-        httpHeaders.set(key, value);
-    });
-    return httpHeaders;
-}
-//# sourceMappingURL=fetchHttpClient.js.map
-// EXTERNAL MODULE: ./node_modules/tunnel/index.js
-var tunnel = __webpack_require__("./node_modules/tunnel/index.js");
-;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/proxyAgent.js
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
-
-
-function createProxyAgent(requestUrl, proxySettings, headers) {
-    const host = URLBuilder.parse(proxySettings.host).getHost();
-    if (!host) {
-        throw new Error("Expecting a non-empty host in proxy settings.");
-    }
-    if (!isValidPort(proxySettings.port)) {
-        throw new Error("Expecting a valid port number in the range of [0, 65535] in proxy settings.");
-    }
-    const tunnelOptions = {
-        proxy: {
-            host: host,
-            port: proxySettings.port,
-            headers: (headers && headers.rawHeaders()) || {}
-        }
-    };
-    if (proxySettings.username && proxySettings.password) {
-        tunnelOptions.proxy.proxyAuth = `${proxySettings.username}:${proxySettings.password}`;
-    }
-    else if (proxySettings.username) {
-        tunnelOptions.proxy.proxyAuth = `${proxySettings.username}`;
-    }
-    const isRequestHttps = isUrlHttps(requestUrl);
-    const isProxyHttps = isUrlHttps(proxySettings.host);
-    const proxyAgent = {
-        isHttps: isRequestHttps,
-        agent: createTunnel(isRequestHttps, isProxyHttps, tunnelOptions)
-    };
-    return proxyAgent;
-}
-function isUrlHttps(url) {
-    const urlScheme = URLBuilder.parse(url).getScheme() || "";
-    return urlScheme.toLowerCase() === "https";
-}
-function createTunnel(isRequestHttps, isProxyHttps, tunnelOptions) {
-    if (isRequestHttps && isProxyHttps) {
-        return tunnel.httpsOverHttps(tunnelOptions);
-    }
-    else if (isRequestHttps && !isProxyHttps) {
-        return tunnel.httpsOverHttp(tunnelOptions);
-    }
-    else if (!isRequestHttps && isProxyHttps) {
-        return tunnel.httpOverHttps(tunnelOptions);
-    }
-    else {
-        return tunnel.httpOverHttp(tunnelOptions);
-    }
-}
-function isValidPort(port) {
-    // any port in 0-65535 range is valid (RFC 793) even though almost all implementations
-    // will reserve 0 for a specific purpose, and a range of numbers for ephemeral ports
-    return 0 <= port && port <= 65535;
-}
-//# sourceMappingURL=proxyAgent.js.map
-;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/nodeFetchHttpClient.js
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
-
-
-
-
-
-
-function getCachedAgent(isHttps, agentCache) {
-    return isHttps ? agentCache.httpsAgent : agentCache.httpAgent;
-}
-class NodeFetchHttpClient extends FetchHttpClient {
-    constructor() {
-        super(...arguments);
-        // a mapping of proxy settings string `${host}:${port}:${username}:${password}` to agent
-        this.proxyAgentMap = new Map();
-        this.keepAliveAgents = {};
-        this.cookieJar = new cookie/* CookieJar */.US(undefined, { looseMode: true });
-    }
     getOrCreateAgent(httpRequest) {
         var _a;
         const isHttps = isUrlHttps(httpRequest.url);
@@ -26233,7 +26390,7 @@ class NodeFetchHttpClient extends FetchHttpClient {
                 return agent;
             }
             const agentOptions = {
-                keepAlive: httpRequest.keepAlive
+                keepAlive: httpRequest.keepAlive,
             };
             if (isHttps) {
                 agent = this.keepAliveAgents.httpsAgent = new external_https_.Agent(agentOptions);
@@ -26247,10 +26404,16 @@ class NodeFetchHttpClient extends FetchHttpClient {
             return isHttps ? external_https_.globalAgent : external_http_.globalAgent;
         }
     }
+    /**
+     * Uses `node-fetch` to perform the request.
+     */
     // eslint-disable-next-line @azure/azure-sdk/ts-apisurface-standardized-verbs
     async fetch(input, init) {
         return lib(input, init);
     }
+    /**
+     * Prepares a request based on the provided web resource.
+     */
     async prepareRequest(httpRequest) {
         const requestInit = {};
         if (this.cookieJar && !httpRequest.headers.get("Cookie")) {
@@ -26271,6 +26434,9 @@ class NodeFetchHttpClient extends FetchHttpClient {
         requestInit.compress = httpRequest.decompressResponse;
         return requestInit;
     }
+    /**
+     * Process an HTTP response. Handles persisting a cookie for subsequent requests if the response has a "Set-Cookie" header.
+     */
     async processRequest(operationResponse) {
         if (this.cookieJar) {
             const setCookieHeader = operationResponse.headers.get("Set-Cookie");
@@ -26587,51 +26753,71 @@ class StorageSharedKeyCredential extends Credential {
     }
 }
 //# sourceMappingURL=StorageSharedKeyCredential.js.map
-;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/operationParameter.js
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
-/**
- * Get the path to this parameter's value as a dotted string (a.b.c).
- * @param parameter - The parameter to get the path string for.
- * @returns The path to this parameter's value as a dotted string.
- */
-function getPathStringFromParameter(parameter) {
-    return getPathStringFromParameterPath(parameter.parameterPath, parameter.mapper);
-}
-function getPathStringFromParameterPath(parameterPath, mapper) {
-    let result;
-    if (typeof parameterPath === "string") {
-        result = parameterPath;
-    }
-    else if (Array.isArray(parameterPath)) {
-        result = parameterPath.join(".");
-    }
-    else {
-        result = mapper.serializedName;
-    }
-    return result;
-}
-//# sourceMappingURL=operationParameter.js.map
-;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/operationSpec.js
+;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/policies/redirectPolicy.js
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+
 /**
- * Gets the list of status codes for streaming responses.
- * @internal
+ * Methods that are allowed to follow redirects 301 and 302
  */
-function getStreamResponseStatusCodes(operationSpec) {
-    const result = new Set();
-    for (const statusCode in operationSpec.responses) {
-        const operationResponse = operationSpec.responses[statusCode];
-        if (operationResponse.bodyMapper &&
-            operationResponse.bodyMapper.type.name === MapperType.Stream) {
-            result.add(Number(statusCode));
-        }
-    }
-    return result;
+const allowedRedirect = ["GET", "HEAD"];
+const redirectPolicy_DefaultRedirectOptions = {
+    handleRedirects: true,
+    maxRetries: 20,
+};
+/**
+ * Creates a redirect policy, which sends a repeats the request to a new destination if a response arrives with a "location" header, and a status code between 300 and 307.
+ * @param maximumRetries - Maximum number of redirects to follow.
+ * @returns An instance of the {@link RedirectPolicy}
+ */
+function redirectPolicy_redirectPolicy(maximumRetries = 20) {
+    return {
+        create: (nextPolicy, options) => {
+            return new RedirectPolicy(nextPolicy, options, maximumRetries);
+        },
+    };
 }
-//# sourceMappingURL=operationSpec.js.map
+/**
+ * Resends the request to a new destination if a response arrives with a "location" header, and a status code between 300 and 307.
+ */
+class RedirectPolicy extends BaseRequestPolicy {
+    constructor(nextPolicy, options, maxRetries = 20) {
+        super(nextPolicy, options);
+        this.maxRetries = maxRetries;
+    }
+    sendRequest(request) {
+        return this._nextPolicy
+            .sendRequest(request)
+            .then((response) => handleRedirect(this, response, 0));
+    }
+}
+function handleRedirect(policy, response, currentRetries) {
+    const { request, status } = response;
+    const locationHeader = response.headers.get("location");
+    if (locationHeader &&
+        (status === 300 ||
+            (status === 301 && allowedRedirect.includes(request.method)) ||
+            (status === 302 && allowedRedirect.includes(request.method)) ||
+            (status === 303 && request.method === "POST") ||
+            status === 307) &&
+        (!policy.maxRetries || currentRetries < policy.maxRetries)) {
+        const builder = URLBuilder.parse(request.url);
+        builder.setPath(locationHeader);
+        request.url = builder.toString();
+        // POST request with Status code 303 should be converted into a
+        // redirected GET request if the redirect url is present in the location header
+        if (status === 303) {
+            request.method = "GET";
+            delete request.body;
+        }
+        return policy._nextPolicy
+            .sendRequest(request)
+            .then((res) => handleRedirect(policy, res, currentRetries + 1));
+    }
+    return Promise.resolve(response);
+}
+//# sourceMappingURL=redirectPolicy.js.map
 ;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/util/exponentialBackoffStrategy.js
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
@@ -26693,11 +26879,17 @@ function updateRetryData(retryOptions, retryData = { retryCount: 0, retryInterva
 
 
 
+/**
+ * Policy that retries the request as many times as configured for as long as the max retry time interval specified, each retry waiting longer to begin than the last time.
+ * @param retryCount - Maximum number of retries.
+ * @param retryInterval - Base time between retries.
+ * @param maxRetryInterval - Maximum time to wait between retries.
+ */
 function exponentialRetryPolicy_exponentialRetryPolicy(retryCount, retryInterval, maxRetryInterval) {
     return {
         create: (nextPolicy, options) => {
             return new ExponentialRetryPolicy(nextPolicy, options, retryCount, retryInterval, maxRetryInterval);
-        }
+        },
     };
 }
 /**
@@ -26705,12 +26897,16 @@ function exponentialRetryPolicy_exponentialRetryPolicy(retryCount, retryInterval
  */
 var RetryMode;
 (function (RetryMode) {
+    /**
+     * Currently supported retry mode.
+     * Each time a retry happens, it will take exponentially more time than the last time.
+     */
     RetryMode[RetryMode["Exponential"] = 0] = "Exponential";
 })(RetryMode || (RetryMode = {}));
 const exponentialRetryPolicy_DefaultRetryOptions = {
     maxRetries: DEFAULT_CLIENT_RETRY_COUNT,
     retryDelayInMs: DEFAULT_CLIENT_RETRY_INTERVAL,
-    maxRetryDelayInMs: DEFAULT_CLIENT_MAX_RETRY_INTERVAL
+    maxRetryDelayInMs: DEFAULT_CLIENT_MAX_RETRY_INTERVAL,
 };
 /**
  * Instantiates a new "ExponentialRetryPolicyFilter" instance.
@@ -26756,7 +26952,7 @@ async function retry(policy, request, response, retryData, requestError) {
     retryData = updateRetryData({
         retryInterval: policy.retryInterval,
         minRetryInterval: 0,
-        maxRetryInterval: policy.maxRetryInterval
+        maxRetryInterval: policy.maxRetryInterval,
     }, retryData, requestError);
     const isAborted = request.abortSignal && request.abortSignal.aborted;
     if (!isAborted && shouldRetry(policy.retryCount, shouldPolicyRetry, retryData, response)) {
@@ -26781,6 +26977,51 @@ async function retry(policy, request, response, retryData, requestError) {
     }
 }
 //# sourceMappingURL=exponentialRetryPolicy.js.map
+;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/operationParameter.js
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+/**
+ * Get the path to this parameter's value as a dotted string (a.b.c).
+ * @param parameter - The parameter to get the path string for.
+ * @returns The path to this parameter's value as a dotted string.
+ */
+function getPathStringFromParameter(parameter) {
+    return getPathStringFromParameterPath(parameter.parameterPath, parameter.mapper);
+}
+function getPathStringFromParameterPath(parameterPath, mapper) {
+    let result;
+    if (typeof parameterPath === "string") {
+        result = parameterPath;
+    }
+    else if (Array.isArray(parameterPath)) {
+        result = parameterPath.join(".");
+    }
+    else {
+        result = mapper.serializedName;
+    }
+    return result;
+}
+//# sourceMappingURL=operationParameter.js.map
+;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/operationSpec.js
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+/**
+ * Gets the list of status codes for streaming responses.
+ * @internal
+ */
+function getStreamResponseStatusCodes(operationSpec) {
+    const result = new Set();
+    for (const statusCode in operationSpec.responses) {
+        const operationResponse = operationSpec.responses[statusCode];
+        if (operationResponse.bodyMapper &&
+            operationResponse.bodyMapper.type.name === MapperType.Stream) {
+            result.add(Number(statusCode));
+        }
+    }
+    return result;
+}
+//# sourceMappingURL=operationSpec.js.map
 ;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/policies/msRestUserAgentPolicy.js
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
@@ -26792,11 +27033,11 @@ function getDefaultUserAgentKey() {
 function getPlatformSpecificData() {
     const runtimeInfo = {
         key: "Node",
-        value: process.version
+        value: process.version,
     };
     const osInfo = {
         key: "OS",
-        value: `(${external_os_.arch()}-${external_os_.type()}-${external_os_.release()})`
+        value: `(${external_os_.arch()}-${external_os_.type()}-${external_os_.release()})`,
     };
     return [runtimeInfo, osInfo];
 }
@@ -26811,7 +27052,7 @@ function getPlatformSpecificData() {
 function getRuntimeInfo() {
     const msRestRuntime = {
         key: "core-http",
-        value: constants_Constants.coreHttpVersion
+        value: constants_Constants.coreHttpVersion,
     };
     return [msRestRuntime];
 }
@@ -26824,12 +27065,21 @@ function getUserAgentString(telemetryInfo, keySeparator = " ", valueSeparator = 
         .join(keySeparator);
 }
 const getDefaultUserAgentHeaderName = getDefaultUserAgentKey;
+/**
+ * The default approach to generate user agents.
+ * Uses static information from this package, plus system information available from the runtime.
+ */
 function userAgentPolicy_getDefaultUserAgentValue() {
     const runtimeInfo = getRuntimeInfo();
     const platformSpecificData = getPlatformSpecificData();
     const userAgent = getUserAgentString(runtimeInfo.concat(platformSpecificData));
     return userAgent;
 }
+/**
+ * Returns a policy that adds the user agent header to outgoing requests based on the given {@link TelemetryInfo}.
+ * @param userAgentData - Telemetry information.
+ * @returns A new {@link UserAgentPolicy}.
+ */
 function userAgentPolicy_userAgentPolicy(userAgentData) {
     const key = !userAgentData || userAgentData.key === undefined || userAgentData.key === null
         ? getDefaultUserAgentKey()
@@ -26840,9 +27090,12 @@ function userAgentPolicy_userAgentPolicy(userAgentData) {
     return {
         create: (nextPolicy, options) => {
             return new UserAgentPolicy(nextPolicy, options, key, value);
-        }
+        },
     };
 }
+/**
+ * A policy that adds the user agent header to outgoing requests based on the given {@link TelemetryInfo}.
+ */
 class UserAgentPolicy extends BaseRequestPolicy {
     constructor(_nextPolicy, _options, headerKey, headerValue) {
         super(_nextPolicy, _options);
@@ -26855,6 +27108,9 @@ class UserAgentPolicy extends BaseRequestPolicy {
         this.addUserAgentHeader(request);
         return this._nextPolicy.sendRequest(request);
     }
+    /**
+     * Adds the user agent header to the outgoing request.
+     */
     addUserAgentHeader(request) {
         if (!request.headers) {
             request.headers = new httpHeaders_HttpHeaders();
@@ -26865,63 +27121,18 @@ class UserAgentPolicy extends BaseRequestPolicy {
     }
 }
 //# sourceMappingURL=userAgentPolicy.js.map
-;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/policies/redirectPolicy.js
+;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/httpClientCache.js
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-
-/**
- * Methods that are allowed to follow redirects 301 and 302
- */
-const allowedRedirect = ["GET", "HEAD"];
-const redirectPolicy_DefaultRedirectOptions = {
-    handleRedirects: true,
-    maxRetries: 20
-};
-function redirectPolicy_redirectPolicy(maximumRetries = 20) {
-    return {
-        create: (nextPolicy, options) => {
-            return new RedirectPolicy(nextPolicy, options, maximumRetries);
-        }
-    };
-}
-class RedirectPolicy extends BaseRequestPolicy {
-    constructor(nextPolicy, options, maxRetries = 20) {
-        super(nextPolicy, options);
-        this.maxRetries = maxRetries;
+let cachedHttpClient;
+function httpClientCache_getCachedDefaultHttpClient() {
+    if (!cachedHttpClient) {
+        cachedHttpClient = new NodeFetchHttpClient();
     }
-    sendRequest(request) {
-        return this._nextPolicy
-            .sendRequest(request)
-            .then((response) => handleRedirect(this, response, 0));
-    }
+    return cachedHttpClient;
 }
-function handleRedirect(policy, response, currentRetries) {
-    const { request, status } = response;
-    const locationHeader = response.headers.get("location");
-    if (locationHeader &&
-        (status === 300 ||
-            (status === 301 && allowedRedirect.includes(request.method)) ||
-            (status === 302 && allowedRedirect.includes(request.method)) ||
-            (status === 303 && request.method === "POST") ||
-            status === 307) &&
-        (!policy.maxRetries || currentRetries < policy.maxRetries)) {
-        const builder = URLBuilder.parse(request.url);
-        builder.setPath(locationHeader);
-        request.url = builder.toString();
-        // POST request with Status code 303 should be converted into a
-        // redirected GET request if the redirect url is present in the location header
-        if (status === 303) {
-            request.method = "GET";
-            delete request.body;
-        }
-        return policy._nextPolicy
-            .sendRequest(request)
-            .then((res) => handleRedirect(policy, res, currentRetries + 1));
-    }
-    return Promise.resolve(response);
-}
-//# sourceMappingURL=redirectPolicy.js.map
+//# sourceMappingURL=httpClientCache.js.map
 ;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/policies/rpRegistrationPolicy.js
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
@@ -26932,7 +27143,7 @@ function rpRegistrationPolicy(retryTimeout = 30) {
     return {
         create: (nextPolicy, options) => {
             return new RPRegistrationPolicy(nextPolicy, options, retryTimeout);
-        }
+        },
     };
 }
 class RPRegistrationPolicy extends BaseRequestPolicy {
@@ -27076,20 +27287,61 @@ async function getRegistrationStatus(policy, url, originalRequest) {
     }
 }
 //# sourceMappingURL=rpRegistrationPolicy.js.map
+;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/policies/signingPolicy.js
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+/**
+ * Creates a policy that signs outgoing requests by calling to the provided `authenticationProvider`'s `signRequest` method.
+ * @param authenticationProvider - The authentication provider.
+ * @returns An instance of the {@link SigningPolicy}.
+ */
+function signingPolicy(authenticationProvider) {
+    return {
+        create: (nextPolicy, options) => {
+            return new SigningPolicy(nextPolicy, options, authenticationProvider);
+        },
+    };
+}
+/**
+ * A policy that signs outgoing requests by calling to the provided `authenticationProvider`'s `signRequest` method.
+ */
+class SigningPolicy extends BaseRequestPolicy {
+    constructor(nextPolicy, options, authenticationProvider) {
+        super(nextPolicy, options);
+        this.authenticationProvider = authenticationProvider;
+    }
+    signRequest(request) {
+        return this.authenticationProvider.signRequest(request);
+    }
+    sendRequest(request) {
+        return this.signRequest(request).then((nextRequest) => this._nextPolicy.sendRequest(nextRequest));
+    }
+}
+//# sourceMappingURL=signingPolicy.js.map
 ;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/policies/systemErrorRetryPolicy.js
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
 
 
+/**
+ * A policy that retries when there's a system error, identified by the codes "ETIMEDOUT", "ESOCKETTIMEDOUT", "ECONNREFUSED", "ECONNRESET" or "ENOENT".
+ * @param retryCount - Maximum number of retries.
+ * @param retryInterval - The client retry interval, in milliseconds.
+ * @param minRetryInterval - The minimum retry interval, in milliseconds.
+ * @param maxRetryInterval - The maximum retry interval, in milliseconds.
+ * @returns An instance of the {@link SystemErrorRetryPolicy}
+ */
 function systemErrorRetryPolicy_systemErrorRetryPolicy(retryCount, retryInterval, minRetryInterval, maxRetryInterval) {
     return {
         create: (nextPolicy, options) => {
             return new SystemErrorRetryPolicy(nextPolicy, options, retryCount, retryInterval, minRetryInterval, maxRetryInterval);
-        }
+        },
     };
 }
 /**
+ * A policy that retries when there's a system error, identified by the codes "ETIMEDOUT", "ESOCKETTIMEDOUT", "ECONNREFUSED", "ECONNRESET" or "ENOENT".
  * @param retryCount - The client retry count.
  * @param retryInterval - The client retry interval, in milliseconds.
  * @param minRetryInterval - The minimum retry interval, in milliseconds.
@@ -27163,15 +27415,28 @@ const DEFAULT_CLIENT_MAX_RETRY_COUNT = 3;
 
 
 const StatusCodes = constants_Constants.HttpConstants.StatusCodes;
+/**
+ * Creates a policy that re-sends the request if the response indicates the request failed because of throttling reasons.
+ * For example, if the response contains a `Retry-After` header, it will retry sending the request based on the value of that header.
+ *
+ * To learn more, please refer to
+ * https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-request-limits,
+ * https://docs.microsoft.com/en-us/azure/azure-subscription-service-limits and
+ * https://docs.microsoft.com/en-us/azure/virtual-machines/troubleshooting/troubleshooting-throttling-errors
+ * @returns
+ */
 function throttlingRetryPolicy_throttlingRetryPolicy() {
     return {
         create: (nextPolicy, options) => {
             return new ThrottlingRetryPolicy(nextPolicy, options);
-        }
+        },
     };
 }
 const throttlingRetryPolicy_StandardAbortMessage = "The operation was aborted.";
 /**
+ * Creates a policy that re-sends the request if the response indicates the request failed because of throttling reasons.
+ * For example, if the response contains a `Retry-After` header, it will retry sending the request based on the value of that header.
+ *
  * To learn more, please refer to
  * https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-request-limits,
  * https://docs.microsoft.com/en-us/azure/azure-subscription-service-limits and
@@ -27202,7 +27467,7 @@ class ThrottlingRetryPolicy extends BaseRequestPolicy {
                 this.numberOfRetries += 1;
                 await delay(delayInMs, undefined, {
                     abortSignal: httpRequest.abortSignal,
-                    abortErrorMsg: throttlingRetryPolicy_StandardAbortMessage
+                    abortErrorMsg: throttlingRetryPolicy_StandardAbortMessage,
                 });
                 if ((_a = httpRequest.abortSignal) === null || _a === void 0 ? void 0 : _a.aborted) {
                     throw new AbortError(throttlingRetryPolicy_StandardAbortMessage);
@@ -27239,42 +27504,6 @@ class ThrottlingRetryPolicy extends BaseRequestPolicy {
     }
 }
 //# sourceMappingURL=throttlingRetryPolicy.js.map
-;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/policies/signingPolicy.js
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
-
-function signingPolicy(authenticationProvider) {
-    return {
-        create: (nextPolicy, options) => {
-            return new SigningPolicy(nextPolicy, options, authenticationProvider);
-        }
-    };
-}
-class SigningPolicy extends BaseRequestPolicy {
-    constructor(nextPolicy, options, authenticationProvider) {
-        super(nextPolicy, options);
-        this.authenticationProvider = authenticationProvider;
-    }
-    signRequest(request) {
-        return this.authenticationProvider.signRequest(request);
-    }
-    sendRequest(request) {
-        return this.signRequest(request).then((nextRequest) => this._nextPolicy.sendRequest(nextRequest));
-    }
-}
-//# sourceMappingURL=signingPolicy.js.map
-;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/httpClientCache.js
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
-
-let cachedHttpClient;
-function httpClientCache_getCachedDefaultHttpClient() {
-    if (!cachedHttpClient) {
-        cachedHttpClient = new NodeFetchHttpClient();
-    }
-    return cachedHttpClient;
-}
-//# sourceMappingURL=httpClientCache.js.map
 ;// CONCATENATED MODULE: ./node_modules/@azure/core-http/dist-esm/src/serviceClient.js
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
@@ -27357,7 +27586,7 @@ class ServiceClient {
                                 bearerTokenPolicyFactory = bearerTokenAuthenticationPolicy(credentials, credentialScopes);
                             }
                             return bearerTokenPolicyFactory.create(nextPolicy, createOptions);
-                        }
+                        },
                     };
                 };
                 authPolicyFactory = wrappedPolicyFactory();
@@ -27592,7 +27821,7 @@ function serializeRequestBody(serviceClient, httpRequest, operationArguments, op
     const updatedOptions = {
         rootName: (_c = serializerOptions.rootName) !== null && _c !== void 0 ? _c : "",
         includeRoot: (_d = serializerOptions.includeRoot) !== null && _d !== void 0 ? _d : false,
-        xmlCharKey: (_e = serializerOptions.xmlCharKey) !== null && _e !== void 0 ? _e : XML_CHARKEY
+        xmlCharKey: (_e = serializerOptions.xmlCharKey) !== null && _e !== void 0 ? _e : XML_CHARKEY,
     };
     const xmlCharKey = serializerOptions.xmlCharKey;
     if (operationSpec.requestBody && operationSpec.requestBody.mapper) {
@@ -27611,13 +27840,13 @@ function serializeRequestBody(serviceClient, httpRequest, operationArguments, op
                     if (typeName === MapperType.Sequence) {
                         httpRequest.body = stringifyXML(prepareXMLRootList(value, xmlElementName || xmlName || serializedName, xmlnsKey, xmlNamespace), {
                             rootName: xmlName || serializedName,
-                            xmlCharKey
+                            xmlCharKey,
                         });
                     }
                     else if (!isStream) {
                         httpRequest.body = stringifyXML(value, {
                             rootName: xmlName || serializedName,
-                            xmlCharKey
+                            xmlCharKey,
                         });
                     }
                 }
@@ -27701,6 +27930,12 @@ function createDefaultRequestPolicyFactories(authPolicyFactory, options) {
     factories.push(logPolicy_logPolicy({ logger: log_logger.info }));
     return factories;
 }
+/**
+ * Creates an HTTP pipeline based on the given options.
+ * @param pipelineOptions - Defines options that are used to configure policies in the HTTP pipeline for an SDK client.
+ * @param authPolicyFactory - An optional authentication policy factory to use for signing requests.
+ * @returns A set of options that can be passed to create a new {@link ServiceClient}.
+ */
 function createPipelineFromOptions(pipelineOptions, authPolicyFactory) {
     const requestPolicyFactories = [];
     if (pipelineOptions.sendStreamingJson) {
@@ -27739,7 +27974,7 @@ function createPipelineFromOptions(pipelineOptions, authPolicyFactory) {
     }
     return {
         httpClient: pipelineOptions.httpClient,
-        requestPolicyFactories
+        requestPolicyFactories,
     };
 }
 /**
@@ -27832,12 +28067,18 @@ function getPropertyFromParameterPath(parent, parameterPath) {
     }
     return result;
 }
+/**
+ * Parses an {@link HttpOperationResponse} into a normalized HTTP response object ({@link RestResponse}).
+ * @param _response - Wrapper object for http response.
+ * @param responseSpec - Mappers for how to parse the response properties.
+ * @returns - A normalized response object.
+ */
 function flattenResponse(_response, responseSpec) {
     const parsedHeaders = _response.parsedHeaders;
     const bodyMapper = responseSpec && responseSpec.bodyMapper;
     const addOperationResponse = (obj) => {
         return Object.defineProperty(obj, "_response", {
-            value: _response
+            value: _response,
         });
     };
     if (bodyMapper) {
@@ -31246,8 +31487,8 @@ class AvroRecordType extends AvroType {
     }
 }
 //# sourceMappingURL=AvroParser.js.map
-// EXTERNAL MODULE: ./node_modules/@azure/core-asynciterator-polyfill/dist-esm/index.js
-var dist_esm = __webpack_require__("./node_modules/@azure/core-asynciterator-polyfill/dist-esm/index.js");
+// EXTERNAL MODULE: ./node_modules/@azure/core-asynciterator-polyfill/dist/index.js
+var dist = __webpack_require__("./node_modules/@azure/core-asynciterator-polyfill/dist/index.js");
 ;// CONCATENATED MODULE: ./node_modules/@azure/core-paging/dist-esm/src/models.js
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
@@ -31276,7 +31517,7 @@ function getPagedAsyncIterator(pagedResult) {
         },
         byPage: (_a = pagedResult === null || pagedResult === void 0 ? void 0 : pagedResult.byPage) !== null && _a !== void 0 ? _a : ((settings) => {
             return getPageAsyncIterator(pagedResult, settings === null || settings === void 0 ? void 0 : settings.maxPageSize);
-        })
+        }),
     };
 }
 function getItemAsyncIterator(pagedResult, maxPageSize) {
@@ -33435,7 +33676,7 @@ class Poller {
             if (!this.isDone()) {
                 this.operation = await this.operation.update({
                     abortSignal: options.abortSignal,
-                    fireProgress: this.fireProgress.bind(this)
+                    fireProgress: this.fireProgress.bind(this),
                 });
                 if (this.isDone() && this.resolve) {
                     // If the poller has finished polling, this means we now have a result.
@@ -41096,10 +41337,10 @@ function populateMaps (extensions, types) {
 module.exports = minimatch
 minimatch.Minimatch = Minimatch
 
-var path = { sep: '/' }
-try {
-  path = __webpack_require__("path")
-} catch (er) {}
+var path = (function () { try { return __webpack_require__("path") } catch (e) {}}()) || {
+  sep: '/'
+}
+minimatch.sep = path.sep
 
 var GLOBSTAR = minimatch.GLOBSTAR = Minimatch.GLOBSTAR = {}
 var expand = __webpack_require__("./node_modules/brace-expansion/index.js")
@@ -41151,43 +41392,64 @@ function filter (pattern, options) {
 }
 
 function ext (a, b) {
-  a = a || {}
   b = b || {}
   var t = {}
-  Object.keys(b).forEach(function (k) {
-    t[k] = b[k]
-  })
   Object.keys(a).forEach(function (k) {
     t[k] = a[k]
+  })
+  Object.keys(b).forEach(function (k) {
+    t[k] = b[k]
   })
   return t
 }
 
 minimatch.defaults = function (def) {
-  if (!def || !Object.keys(def).length) return minimatch
+  if (!def || typeof def !== 'object' || !Object.keys(def).length) {
+    return minimatch
+  }
 
   var orig = minimatch
 
   var m = function minimatch (p, pattern, options) {
-    return orig.minimatch(p, pattern, ext(def, options))
+    return orig(p, pattern, ext(def, options))
   }
 
   m.Minimatch = function Minimatch (pattern, options) {
     return new orig.Minimatch(pattern, ext(def, options))
+  }
+  m.Minimatch.defaults = function defaults (options) {
+    return orig.defaults(ext(def, options)).Minimatch
+  }
+
+  m.filter = function filter (pattern, options) {
+    return orig.filter(pattern, ext(def, options))
+  }
+
+  m.defaults = function defaults (options) {
+    return orig.defaults(ext(def, options))
+  }
+
+  m.makeRe = function makeRe (pattern, options) {
+    return orig.makeRe(pattern, ext(def, options))
+  }
+
+  m.braceExpand = function braceExpand (pattern, options) {
+    return orig.braceExpand(pattern, ext(def, options))
+  }
+
+  m.match = function (list, pattern, options) {
+    return orig.match(list, pattern, ext(def, options))
   }
 
   return m
 }
 
 Minimatch.defaults = function (def) {
-  if (!def || !Object.keys(def).length) return Minimatch
   return minimatch.defaults(def).Minimatch
 }
 
 function minimatch (p, pattern, options) {
-  if (typeof pattern !== 'string') {
-    throw new TypeError('glob pattern string required')
-  }
+  assertValidPattern(pattern)
 
   if (!options) options = {}
 
@@ -41195,9 +41457,6 @@ function minimatch (p, pattern, options) {
   if (!options.nocomment && pattern.charAt(0) === '#') {
     return false
   }
-
-  // "" only matches ""
-  if (pattern.trim() === '') return p === ''
 
   return new Minimatch(pattern, options).match(p)
 }
@@ -41207,15 +41466,12 @@ function Minimatch (pattern, options) {
     return new Minimatch(pattern, options)
   }
 
-  if (typeof pattern !== 'string') {
-    throw new TypeError('glob pattern string required')
-  }
+  assertValidPattern(pattern)
 
   if (!options) options = {}
-  pattern = pattern.trim()
 
   // windows support: need to use /, not \
-  if (path.sep !== '/') {
+  if (!options.allowWindowsEscape && path.sep !== '/') {
     pattern = pattern.split(path.sep).join('/')
   }
 
@@ -41226,6 +41482,7 @@ function Minimatch (pattern, options) {
   this.negate = false
   this.comment = false
   this.empty = false
+  this.partial = !!options.partial
 
   // make the set of regexps etc.
   this.make()
@@ -41235,9 +41492,6 @@ Minimatch.prototype.debug = function () {}
 
 Minimatch.prototype.make = make
 function make () {
-  // don't do it more than once.
-  if (this._made) return
-
   var pattern = this.pattern
   var options = this.options
 
@@ -41257,7 +41511,7 @@ function make () {
   // step 2: expand braces
   var set = this.globSet = this.braceExpand()
 
-  if (options.debug) this.debug = console.error
+  if (options.debug) this.debug = function debug() { console.error.apply(console, arguments) }
 
   this.debug(this.pattern, set)
 
@@ -41337,17 +41591,27 @@ function braceExpand (pattern, options) {
   pattern = typeof pattern === 'undefined'
     ? this.pattern : pattern
 
-  if (typeof pattern === 'undefined') {
-    throw new TypeError('undefined pattern')
-  }
+  assertValidPattern(pattern)
 
-  if (options.nobrace ||
-    !pattern.match(/\{.*\}/)) {
+  // Thanks to Yeting Li <https://github.com/yetingli> for
+  // improving this regexp to avoid a ReDOS vulnerability.
+  if (options.nobrace || !/\{(?:(?!\{).)*\}/.test(pattern)) {
     // shortcut. no need to expand.
     return [pattern]
   }
 
   return expand(pattern)
+}
+
+var MAX_PATTERN_LENGTH = 1024 * 64
+var assertValidPattern = function (pattern) {
+  if (typeof pattern !== 'string') {
+    throw new TypeError('invalid pattern')
+  }
+
+  if (pattern.length > MAX_PATTERN_LENGTH) {
+    throw new TypeError('pattern is too long')
+  }
 }
 
 // parse a component of the expanded set.
@@ -41364,14 +41628,17 @@ function braceExpand (pattern, options) {
 Minimatch.prototype.parse = parse
 var SUBPARSE = {}
 function parse (pattern, isSub) {
-  if (pattern.length > 1024 * 64) {
-    throw new TypeError('pattern is too long')
-  }
+  assertValidPattern(pattern)
 
   var options = this.options
 
   // shortcuts
-  if (!options.noglobstar && pattern === '**') return GLOBSTAR
+  if (pattern === '**') {
+    if (!options.noglobstar)
+      return GLOBSTAR
+    else
+      pattern = '*'
+  }
   if (pattern === '') return ''
 
   var re = ''
@@ -41427,10 +41694,12 @@ function parse (pattern, isSub) {
     }
 
     switch (c) {
-      case '/':
+      /* istanbul ignore next */
+      case '/': {
         // completely not allowed, even escaped.
         // Should already be path-split by now.
         return false
+      }
 
       case '\\':
         clearStateChar()
@@ -41549,25 +41818,23 @@ function parse (pattern, isSub) {
 
         // handle the case where we left a class open.
         // "[z-a]" is valid, equivalent to "\[z-a\]"
-        if (inClass) {
-          // split where the last [ was, make sure we don't have
-          // an invalid re. if so, re-walk the contents of the
-          // would-be class to re-translate any characters that
-          // were passed through as-is
-          // TODO: It would probably be faster to determine this
-          // without a try/catch and a new RegExp, but it's tricky
-          // to do safely.  For now, this is safe and works.
-          var cs = pattern.substring(classStart + 1, i)
-          try {
-            RegExp('[' + cs + ']')
-          } catch (er) {
-            // not a valid class!
-            var sp = this.parse(cs, SUBPARSE)
-            re = re.substr(0, reClassStart) + '\\[' + sp[0] + '\\]'
-            hasMagic = hasMagic || sp[1]
-            inClass = false
-            continue
-          }
+        // split where the last [ was, make sure we don't have
+        // an invalid re. if so, re-walk the contents of the
+        // would-be class to re-translate any characters that
+        // were passed through as-is
+        // TODO: It would probably be faster to determine this
+        // without a try/catch and a new RegExp, but it's tricky
+        // to do safely.  For now, this is safe and works.
+        var cs = pattern.substring(classStart + 1, i)
+        try {
+          RegExp('[' + cs + ']')
+        } catch (er) {
+          // not a valid class!
+          var sp = this.parse(cs, SUBPARSE)
+          re = re.substr(0, reClassStart) + '\\[' + sp[0] + '\\]'
+          hasMagic = hasMagic || sp[1]
+          inClass = false
+          continue
         }
 
         // finish up the class.
@@ -41651,9 +41918,7 @@ function parse (pattern, isSub) {
   // something that could conceivably capture a dot
   var addPatternStart = false
   switch (re.charAt(0)) {
-    case '.':
-    case '[':
-    case '(': addPatternStart = true
+    case '[': case '.': case '(': addPatternStart = true
   }
 
   // Hack to work around lack of negative lookbehind in JS
@@ -41715,7 +41980,7 @@ function parse (pattern, isSub) {
   var flags = options.nocase ? 'i' : ''
   try {
     var regExp = new RegExp('^' + re + '$', flags)
-  } catch (er) {
+  } catch (er) /* istanbul ignore next - should be impossible */ {
     // If it was an invalid regular expression, then it can't match
     // anything.  This trick looks for a character after the end of
     // the string, which is of course impossible, except in multi-line
@@ -41773,7 +42038,7 @@ function makeRe () {
 
   try {
     this.regexp = new RegExp(re, flags)
-  } catch (ex) {
+  } catch (ex) /* istanbul ignore next - should be impossible */ {
     this.regexp = false
   }
   return this.regexp
@@ -41791,8 +42056,8 @@ minimatch.match = function (list, pattern, options) {
   return list
 }
 
-Minimatch.prototype.match = match
-function match (f, partial) {
+Minimatch.prototype.match = function match (f, partial) {
+  if (typeof partial === 'undefined') partial = this.partial
   this.debug('match', f, this.pattern)
   // short-circuit in the case of busted things.
   // comments, etc.
@@ -41874,6 +42139,7 @@ Minimatch.prototype.matchOne = function (file, pattern, partial) {
 
     // should be impossible.
     // some invalid regexp stuff in the set.
+    /* istanbul ignore if */
     if (p === false) return false
 
     if (p === GLOBSTAR) {
@@ -41947,6 +42213,7 @@ Minimatch.prototype.matchOne = function (file, pattern, partial) {
       // no match was found.
       // However, in partial mode, we can't say this is necessarily over.
       // If there's more *pattern* left, then
+      /* istanbul ignore if */
       if (partial) {
         // ran out of file
         this.debug('\n>>> no match, partial?', file, fr, pattern, pr)
@@ -41960,11 +42227,7 @@ Minimatch.prototype.matchOne = function (file, pattern, partial) {
     // patterns with magic have been turned into regexps.
     var hit
     if (typeof p === 'string') {
-      if (options.nocase) {
-        hit = f.toLowerCase() === p.toLowerCase()
-      } else {
-        hit = f === p
-      }
+      hit = f === p
       this.debug('string match', p, f, hit)
     } else {
       hit = f.match(p)
@@ -41995,16 +42258,16 @@ Minimatch.prototype.matchOne = function (file, pattern, partial) {
     // this is ok if we're doing the match as part of
     // a glob fs traversal.
     return partial
-  } else if (pi === pl) {
+  } else /* istanbul ignore else */ if (pi === pl) {
     // ran out of pattern, still have file left.
     // this is only acceptable if we're on the very last
     // empty segment of a file with a trailing slash.
     // a/* should match a/b/
-    var emptyFileEnd = (fi === fl - 1) && (file[fi] === '')
-    return emptyFileEnd
+    return (fi === fl - 1) && (file[fi] === '')
   }
 
   // should be unreachable.
+  /* istanbul ignore next */
   throw new Error('wtf?')
 }
 
