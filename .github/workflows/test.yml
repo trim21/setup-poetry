@@ -10,7 +10,7 @@ jobs:
   build: # make sure build/ci work properly
     runs-on: ubuntu-latest
     env:
-      NODE_VERSION: "16"
+      NODE_VERSION: "18"
 
     steps:
       - uses: actions/checkout@v3
