@@ -55438,8 +55438,8 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 const paths = [external_path_.join(external_os_.homedir(), ".poetry", ".venv")];
 function cacheKey(pyVersion, version) {
     const md5 = external_crypto_.createHash("md5");
-    const result = md5.update(pyVersion + version).digest("hex");
-    const key = `trim21-tool-poetry-5-${process.platform}-${result}`;
+    const result = md5.update(process.platform + pyVersion + version).digest("hex");
+    const key = `trim21-tool-poetry-6-${result}`;
     core.info(`cache with key ${key}`);
     return key;
 }
