@@ -37,7 +37,4 @@ async function run(): Promise<void> {
   core.addPath(path.join(poetryHome, "bin"));
 }
 
-run().catch((e) => {
-  core.setFailed(e);
-  process.exit(1);
-});
+await run();
