@@ -55461,7 +55461,8 @@ function setup(pythonVersion, poetryVersion) {
 }
 function restore(pythonVersion, poetryVersion) {
     return __awaiter(this, void 0, void 0, function* () {
-        return !!(yield cache.restoreCache(paths, cacheKey(pythonVersion, poetryVersion)));
+        const key = cacheKey(pythonVersion, poetryVersion);
+        return key === (yield cache.restoreCache(paths, key));
     });
 }
 
