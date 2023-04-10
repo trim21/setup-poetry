@@ -6,7 +6,7 @@ import * as cache from "@actions/cache";
 import * as core from "@actions/core";
 import { ReserveCacheError } from "@actions/cache";
 
-const paths = [path.join(os.homedir(), ".poetry", ".venv")];
+const cacheHome = path.join(os.homedir(), ".poetry", ".venv");
 
 function cacheKey(pyVersion: string, version: string): string {
   const md5 = crypto.createHash("md5");
@@ -21,7 +21,7 @@ export async function setup(
   poetryVersion: string
 ): Promise<void> {
   try {
-    await cache.saveCache(paths, cacheKey(pythonVersion, poetryVersion));
+    await cache.saveCache([cacheHome], cacheKey(pythonVersion, poetryVersion));
   } catch (e) {
     if (e instanceof ReserveCacheError) {
       if (e.toString().includes("another job may be creating this cache")) {
@@ -38,7 +38,7 @@ export async function restore(
   poetryVersion: string
 ): Promise<Boolean> {
   const key = cacheKey(pythonVersion, poetryVersion);
-  const restoreCache = await cache.restoreCache(paths, key);
+  const restoreCache = await cache.restoreCache([cacheHome], key);
   core.info(`expected cache key ${JSON.stringify(key)}`);
   core.info(`restored cache key ${JSON.stringify(restoreCache)}`);
   core.info(`hit primary cache key ${key === restoreCache}`);
