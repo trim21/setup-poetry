@@ -3,7 +3,7 @@ description: "install poetry in a venv"
 author: "Trim21 <trim21.me@gmail.com>"
 inputs:
   version:
-    description: "expected poeotry version"
+    description: "expected poetry version"
     default: ""
     required: false
 

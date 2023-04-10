@@ -27,7 +27,6 @@ jobs:
           key: yarn-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
 
       - run: yarn
-        if: steps.restore-cache.outputs.cache-hit != 'true'
 
       - run: yarn lint
       - run: yarn test
