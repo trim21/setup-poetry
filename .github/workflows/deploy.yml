@@ -17,15 +17,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-
-      - uses: actions/cache@v3
-        id: cache
-        with:
-          path: ./node_modules
-          key: yarn-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
+          cache: yarn
 
       - run: yarn
-        if: steps.cache.outputs.cache-hit != 'true'
 
       - run: yarn build
 
