@@ -39,7 +39,8 @@ export async function restore(
 ): Promise<Boolean> {
   const key = cacheKey(pythonVersion, poetryVersion);
   const restoreCache = await cache.restoreCache(paths, key);
-  core.info(`restored cache key ${key}`);
+  core.info(`expected cache key ${JSON.stringify(key)}`);
+  core.info(`restored cache key ${JSON.stringify(restoreCache)}`);
   core.info(`hit primary cache key ${key === restoreCache}`);
   return key === restoreCache;
 }
