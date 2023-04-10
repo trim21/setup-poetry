@@ -55463,7 +55463,8 @@ function restore(pythonVersion, poetryVersion) {
     return __awaiter(this, void 0, void 0, function* () {
         const key = cacheKey(pythonVersion, poetryVersion);
         const restoreCache = yield cache.restoreCache(paths, key);
-        core.info(`restored cache key ${key}`);
+        core.info(`expected cache key ${JSON.stringify(key)}`);
+        core.info(`restored cache key ${JSON.stringify(restoreCache)}`);
         core.info(`hit primary cache key ${key === restoreCache}`);
         return key === restoreCache;
     });
