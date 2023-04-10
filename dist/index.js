@@ -55438,7 +55438,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 const paths = [external_path_.join(external_os_.homedir(), ".poetry", ".venv")];
 function cacheKey(pyVersion, version) {
     const md5 = external_crypto_.createHash("md5");
-    const result = md5.update(process.platform + pyVersion + version).digest("hex");
+    const result = md5.update(process.platform + process.arch + pyVersion + version).digest("hex");
     const key = `trim21-tool-poetry-6-${result}`;
     core.info(`cache with key ${key}`);
     return key;
@@ -55462,7 +55462,9 @@ function setup(pythonVersion, poetryVersion) {
 function restore(pythonVersion, poetryVersion) {
     return __awaiter(this, void 0, void 0, function* () {
         const key = cacheKey(pythonVersion, poetryVersion);
-        return key === (yield cache.restoreCache(paths, key));
+        const restoreCache = yield cache.restoreCache(paths, key);
+        core.info(`restored cache key ${key}`);
+        return key === restoreCache;
     });
 }
 
