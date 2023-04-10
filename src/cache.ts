@@ -37,8 +37,6 @@ export async function restore(
   pythonVersion: string,
   poetryVersion: string
 ): Promise<Boolean> {
-  return !!(await cache.restoreCache(
-    paths,
-    cacheKey(pythonVersion, poetryVersion)
-  ));
+  const key = cacheKey(pythonVersion, poetryVersion);
+  return key === await cache.restoreCache(paths, key);
 }
