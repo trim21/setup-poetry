@@ -9,38 +9,41 @@ import * as cache from "./cache";
 import {
   createSymlink,
   createVenv, getLatestMatchedVersion,
-  getLatestPoetryVersion, getPoetryPypiJSON,
+  getPoetryPypiJSON,
   getPythonVersion,
 } from "./utils";
 
-async function run(): Promise<void> {
-  let wantedVersion = core.getInput("version");
-
-  const pythonVersion = await getPythonVersion();
-  let toInstall: string;
+async function getExpectedPoetryVersion(wantedVersion: string): Promise<string> {
+  const json = await getPoetryPypiJSON();
 
   if (!wantedVersion) {
     core.info("poetry version not specified, latest poetry will be installed");
-    toInstall = await getLatestPoetryVersion();
-  } else {
-    const json = await getPoetryPypiJSON();
-    const v = getLatestMatchedVersion(Object.keys(json.releases), wantedVersion);
-    if (!v) {
-      throw new Error(`can't get expected poetry version, ${JSON.stringify(wantedVersion)}`);
-    }
-    toInstall = v;
+    return json.info.version;
   }
+
+  const version = getLatestMatchedVersion(Object.keys(json.releases), wantedVersion);
+  if (!version) {
+    throw new Error(`can't get expected poetry version, ${JSON.stringify(wantedVersion)}`);
+  }
+  return version;
+}
+
+async function run(): Promise<void> {
+  let wantedVersion = core.getInput("version");
+  const poetryVersion = await getExpectedPoetryVersion(wantedVersion);
+  const pythonVersion = await getPythonVersion();
+  core.info(`using python version ${pythonVersion}`);
 
   const poetryHome = path.join(os.homedir(), ".poetry");
 
-  if (!(await cache.restore(pythonVersion, toInstall))) {
+  if (!(await cache.restore(pythonVersion, poetryVersion))) {
     if (!fs.existsSync(poetryHome)) {
       fs.mkdirSync(poetryHome);
     }
     process.chdir(poetryHome);
     const pythonPath = await createVenv();
-    await exec(pythonPath, ["-m", "pip", "install", `poetry${toInstall ? `==${toInstall}` : ""}`]);
-    await cache.setup(pythonVersion, toInstall);
+    await exec(pythonPath, ["-m", "pip", "install", `poetry${poetryVersion ? `==${poetryVersion}` : ""}`]);
+    await cache.setup(pythonVersion, poetryVersion);
   }
   fs.mkdirSync(path.join(poetryHome, "bin"));
   await createSymlink(poetryHome);

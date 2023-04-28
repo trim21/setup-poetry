@@ -1,7 +1,7 @@
-import { getLatestPoetryVersion, getLatestMatchedVersion } from "../src/utils";
+import { getPoetryPypiJSON, getLatestMatchedVersion } from "../src/utils";
 
 test("throws invalid number", async () => {
-  expect(await getLatestPoetryVersion()).toMatch(/\d+\.\d+\.\d+/);
+  expect((await getPoetryPypiJSON()).info.version).toMatch(/\d+\.\d+\.\d+/);
 });
 
 test("select latest version", () => {

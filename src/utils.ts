@@ -6,7 +6,12 @@ import { HttpClient, HttpClientResponse } from "@actions/http-client";
 import * as pep440 from "@renovatebot/pep440";
 
 interface PypiJson {
-  info: { version: string };
+  info: {
+    /**
+     * latest poetry stable version
+     */
+    version: string;
+  };
   releases: Record<string, unknown>;
 }
 
@@ -21,11 +26,6 @@ export async function getPoetryPypiJSON(): Promise<PypiJson> {
   );
   const body: string = await res.readBody();
   return JSON.parse(body) as PypiJson;
-}
-
-export async function getLatestPoetryVersion(): Promise<string> {
-  const obj = await getPoetryPypiJSON();
-  return obj.info.version;
 }
 
 export async function getPythonVersion(): Promise<string> {
