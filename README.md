@@ -2,6 +2,10 @@
 
 [![ci](https://github.com/Trim21/setup-poetry/workflows/build-test/badge.svg)](https://github.com/Trim21/setup-poetry/actions)
 
+Install [python-poetry](https://github.com/python-poetry/poetry) in your OS.
+
+Support poetry>=1.3
+
 ```yaml
 uses: trim21/setup-poetry@dist/v1
 with:
