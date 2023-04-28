@@ -8,19 +8,27 @@ import { exec } from "@actions/exec";
 import * as cache from "./cache";
 import {
   createSymlink,
-  createVenv,
-  getLatestPoetryVersion,
+  createVenv, getLatestMatchedVersion,
+  getLatestPoetryVersion, getPoetryPypiJSON,
   getPythonVersion,
 } from "./utils";
 
 async function run(): Promise<void> {
   let wantedVersion = core.getInput("version");
-  // const preview = core.getInput('preview')
+
   const pythonVersion = await getPythonVersion();
-  //
+  let toInstall: string | null = null;
+
   if (!wantedVersion) {
-    wantedVersion = await getLatestPoetryVersion();
+    toInstall = await getLatestPoetryVersion();
+  } else {
+    const json = await getPoetryPypiJSON();
+    toInstall = getLatestMatchedVersion(Object.keys(json.releases), wantedVersion);
+    if (!toInstall) {
+      throw new Error(`can't get expected poetry version, ${JSON.stringify(wantedVersion)}`);
+    }
   }
+
   const poetryHome = path.join(os.homedir(), ".poetry");
 
   if (!(await cache.restore(pythonVersion, wantedVersion))) {
@@ -29,7 +37,7 @@ async function run(): Promise<void> {
     }
     process.chdir(poetryHome);
     const pythonPath = await createVenv();
-    await exec(pythonPath, ["-m", "pip", "install", `poetry==${wantedVersion}`]);
+    await exec(pythonPath, ["-m", "pip", "install", `poetry${toInstall ? `==${toInstall}` : ""}`]);
     await cache.setup(pythonVersion, wantedVersion);
   }
   fs.mkdirSync(path.join(poetryHome, "bin"));
@@ -38,6 +46,7 @@ async function run(): Promise<void> {
 }
 
 run().catch((e) => {
+  core.error(e);
   core.setFailed(e);
   process.exit(1);
 });

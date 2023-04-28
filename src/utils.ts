@@ -3,18 +3,28 @@ import { promises as fs } from "fs";
 
 import { exec } from "@actions/exec";
 import { HttpClient, HttpClientResponse } from "@actions/http-client";
+import * as pep440 from "@renovatebot/pep440";
 
 interface PypiJson {
   info: { version: string };
+  releases: Record<string, unknown>;
 }
 
-export async function getLatestPoetryVersion(): Promise<string> {
+export function getLatestMatchedVersion(versions: string[], specifier: string,): string | null {
+  return pep440.maxSatisfying(versions, specifier);
+}
+
+export async function getPoetryPypiJSON(): Promise<PypiJson> {
   const http = new HttpClient("actions install poetry");
   const res: HttpClientResponse = await http.get(
     "https://pypi.org/pypi/poetry/json"
   );
   const body: string = await res.readBody();
-  const obj: PypiJson = JSON.parse(body);
+  return JSON.parse(body) as PypiJson;
+}
+
+export async function getLatestPoetryVersion(): Promise<string> {
+  const obj = await getPoetryPypiJSON();
   return obj.info.version;
 }
 
