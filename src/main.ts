@@ -20,6 +20,7 @@ async function run(): Promise<void> {
   let toInstall: string;
 
   if (!wantedVersion) {
+    core.info("poetry version not specified, latest poetry will be installed");
     toInstall = await getLatestPoetryVersion();
   } else {
     const json = await getPoetryPypiJSON();
