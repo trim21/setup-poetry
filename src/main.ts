@@ -17,28 +17,29 @@ async function run(): Promise<void> {
   let wantedVersion = core.getInput("version");
 
   const pythonVersion = await getPythonVersion();
-  let toInstall: string | null = null;
+  let toInstall: string;
 
   if (!wantedVersion) {
     toInstall = await getLatestPoetryVersion();
   } else {
     const json = await getPoetryPypiJSON();
-    toInstall = getLatestMatchedVersion(Object.keys(json.releases), wantedVersion);
-    if (!toInstall) {
+    const v = getLatestMatchedVersion(Object.keys(json.releases), wantedVersion);
+    if (!v) {
       throw new Error(`can't get expected poetry version, ${JSON.stringify(wantedVersion)}`);
     }
+    toInstall = v;
   }
 
   const poetryHome = path.join(os.homedir(), ".poetry");
 
-  if (!(await cache.restore(pythonVersion, wantedVersion))) {
+  if (!(await cache.restore(pythonVersion, toInstall))) {
     if (!fs.existsSync(poetryHome)) {
       fs.mkdirSync(poetryHome);
     }
     process.chdir(poetryHome);
     const pythonPath = await createVenv();
     await exec(pythonPath, ["-m", "pip", "install", `poetry${toInstall ? `==${toInstall}` : ""}`]);
-    await cache.setup(pythonVersion, wantedVersion);
+    await cache.setup(pythonVersion, toInstall);
   }
   fs.mkdirSync(path.join(poetryHome, "bin"));
   await createSymlink(poetryHome);
