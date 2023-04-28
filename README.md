@@ -3,13 +3,14 @@
 [![ci](https://github.com/Trim21/setup-poetry/workflows/build-test/badge.svg)](https://github.com/Trim21/setup-poetry/actions)
 
 ```yaml
-uses: Trim21/setup-poetry@dist/v1
+uses: trim21/setup-poetry@dist/v1
 with:
   version: "" # empty string for latest poetry
 ```
 
-you can set a empty string `""` for latest poetry or any valid pep440 version
-range.
+default it will install latest poetry.
+
+Or you can use any valid pep440 version range.
 
 for example
 
