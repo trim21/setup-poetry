@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
+  "name": "setup-python-poetry",
   "version": "1.1.9",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "install poetry in on your OS",
   "main": "dist/index.js",
   "scripts": {
     "lint": "eslint --ext ts,js ./",

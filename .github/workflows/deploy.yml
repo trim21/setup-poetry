@@ -28,6 +28,8 @@ jobs:
           mv dist/index.js dist/dist/index.js
           cp action.yml dist
 
+      - run: echo "TAG=v$(cat package.json | jq .version -r)" >> $GITHUB_ENV
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -37,3 +39,9 @@ jobs:
           publish_branch: dist/v1
           user_name: github-actions[bot]
           user_email: github-actions[bot]@users.noreply.github.com
+          tag_name: dist/${{ env.TAG }}
+          tag_message: "release ${{ github.ref_name }}"
+
+      - run: gh release create "dist/${TAG}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
