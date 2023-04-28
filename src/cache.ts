@@ -23,10 +23,11 @@ export async function setup(
   try {
     await cache.saveCache([cacheHome], cacheKey(pythonVersion, poetryVersion));
   } catch (e) {
+    if (e?.toString().includes("another job may be creating this cache")) {
+      return;
+    }
+
     if (e instanceof ReserveCacheError) {
-      if (e.toString().includes("another job may be creating this cache")) {
-        return;
-      }
       throw e;
     }
     throw e;
