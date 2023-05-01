@@ -53,5 +53,5 @@ async function run(): Promise<void> {
 run().catch((e) => {
   core.error(e);
   core.setFailed(e);
-  process.exit(1);
+  throw e;
 });
