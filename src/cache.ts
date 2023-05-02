@@ -11,7 +11,7 @@ const cacheHome = path.join(os.homedir(), ".poetry", ".venv");
 function cacheKey(pyVersion: string, version: string): string {
   const md5 = crypto.createHash("md5");
   const result = md5.update(process.platform + process.arch + pyVersion + version).digest("hex");
-  const key = `trim21-tool-poetry-6-${result}`;
+  const key = `trim21-tool-poetry-7-${result}`;
   core.info(`cache with key ${key}`);
   return key;
 }
