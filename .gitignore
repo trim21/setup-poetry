@@ -100,3 +100,6 @@ lib/**/*
 dist/
 
 .idea
+
+.yarn/*
+!.yarn/releases
