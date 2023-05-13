@@ -9,8 +9,8 @@ Support poetry>=1.3
 ```yaml
 steps:
   - uses: trim21/setup-poetry@dist/v1
-    with:
-      version: "" # empty string for latest poetry
+    # with:
+    #   version: "<2.0" # empty string for latest poetry
 ```
 
 default it will install latest poetry.
