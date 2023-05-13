@@ -7,9 +7,10 @@ Install [python-poetry](https://github.com/python-poetry/poetry) in your OS.
 Support poetry>=1.3
 
 ```yaml
-uses: trim21/setup-poetry@dist/v1
-with:
-  version: "" # empty string for latest poetry
+steps:
+  - uses: trim21/setup-poetry@dist/v1
+    with:
+      version: "" # empty string for latest poetry
 ```
 
 default it will install latest poetry.
