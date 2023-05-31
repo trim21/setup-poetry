@@ -1178,10 +1178,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@renovatebot/pep440@npm:2.1.13":
-  version: 2.1.13
-  resolution: "@renovatebot/pep440@npm:2.1.13"
-  checksum: 89f7f4d99c5a0b32c117c2c0b748294d12a78177666fe3ebcd5c22b7a323b538c3804c2e2412f0780a752e494ce46d29c7a78fd3cef434446ec1525ed2c300f6
+"@renovatebot/pep440@npm:2.1.15":
+  version: 2.1.15
+  resolution: "@renovatebot/pep440@npm:2.1.15"
+  checksum: eaeff77ce9f47d0e0423c87c75b6339970f13689042cb6fe6ee4cea28ec709e771cec905ad7244a911e33202432184aafdd0a80e5b7ce52a78e1064de5da3245
   languageName: node
   linkType: hard
 
@@ -5116,7 +5116,7 @@ __metadata:
     "@actions/core": 1.10.0
     "@actions/exec": 1.1.1
     "@actions/http-client": 2.1.0
-    "@renovatebot/pep440": 2.1.13
+    "@renovatebot/pep440": 2.1.15
     "@types/jest": 29.5.1
     "@types/node": 18.16.3
     "@typescript-eslint/eslint-plugin": 5.59.1
