@@ -13,7 +13,7 @@
     "postversion": "git push"
   },
   "license": "MIT",
-  "packageManager": "yarn@3.5.1",
+  "packageManager": "yarn@3.6.0",
   "engines": {
     "node": ">=16.16.0"
   },
