@@ -1351,7 +1351,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16.0.0":
+"@types/node@npm:16.18.39":
   version: 16.18.39
   resolution: "@types/node@npm:16.18.39"
   checksum: eac9b202b76013256cb517ca8d3e3f61df206edb1615ca8d8df4c80616e92879fe4d3f8570a11d60f4216a82724a3265d5888b24c6994c80b057a0423c9ff1d2
@@ -5269,7 +5269,7 @@ __metadata:
     "@actions/http-client": 2.1.0
     "@renovatebot/pep440": 2.1.20
     "@types/jest": 29.5.3
-    "@types/node": ^16.0.0
+    "@types/node": 16.18.39
     "@typescript-eslint/eslint-plugin": 6.2.1
     "@typescript-eslint/parser": 6.2.1
     esbuild: 0.18.17
