@@ -44,8 +44,8 @@ async function getExpectedPoetryVersion(wantedVersion: string, currentPythonVers
 async function run(): Promise<void> {
   let wantedVersion = core.getInput("version");
   const [pythonVersion, pythonSemverVersion] = await getPythonVersion();
+  core.info(`using python version ${pythonSemverVersion}, full spec: ${pythonVersion}`);
   const poetryVersion = await getExpectedPoetryVersion(wantedVersion, pythonSemverVersion);
-  core.info(`using python version ${pythonVersion}`);
 
   const poetryHome = path.join(os.homedir(), ".poetry");
 
