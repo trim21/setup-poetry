@@ -6,6 +6,10 @@ on: # rebuild any PRs and main branch changes
       - master
       - "dist/*"
 
+concurrency:
+  cancel-in-progress: true
+  group: "${{ github.workflow }}-${{ github.ref }}"
+
 jobs:
   build: # make sure build/ci work properly
     runs-on: ubuntu-latest
@@ -37,9 +41,6 @@ jobs:
   test-run: # make sure the action works on a clean machine without building
     needs: build
     runs-on: ${{ matrix.os }}
-    concurrency:
-      cancel-in-progress: true
-      group: '${{ github.workflow }}-${{ github.ref }}'
     strategy:
       fail-fast: true
       max-parallel: 6
