@@ -17,21 +17,21 @@ import {
 async function getExpectedPoetryVersion(wantedVersion: string, currentPythonVersion: [number, number, number]): Promise<string> {
   const json = await getPoetryPypiJSON();
 
+  const pyVer = currentPythonVersion.join(",");
+  const currentPythonSupportedPoetry = Object.entries(json.releases).filter(([key, value]) => {
+    return pep440.satisfies(pyVer, value.requires_python) && pep440.satisfies(key, ">=1.3");
+  }).map(([key]) => key);
+  if (!currentPythonSupportedPoetry.length) {
+    core.error(`can't find any poetry version support current python version ${pyVer}`);
+    throw new Error("can't find poetry version support current python");
+  }
+
   if (!wantedVersion) {
     core.info("poetry version not specified, latest poetry will be installed");
-    const pyVer = currentPythonVersion.join(",");
-    const currentPythonSupportedPoetry = Object.entries(json.releases).filter(([key, value]) => {
-      return pep440.satisfies(pyVer, value.requires_python) && pep440.satisfies(key, ">=1.3");
-    }).map(([key]) => key);
-    if (!currentPythonSupportedPoetry.length) {
-      core.error(`can't find any poetry version support current python version ${pyVer}`);
-      throw new Error("can't find poetry version support current python");
-    }
-
     return currentPythonSupportedPoetry.sort((a, b) => pep440.compare(a, b))[0];
   }
 
-  const version = getLatestMatchedVersion(Object.keys(json.releases), wantedVersion);
+  const version = getLatestMatchedVersion(currentPythonSupportedPoetry, wantedVersion);
   if (!version) {
     throw new Error(`can't get expected poetry version, ${JSON.stringify(wantedVersion)}`);
   }
