@@ -4,6 +4,7 @@ import * as path from "path";
 
 import * as core from "@actions/core";
 import { exec } from "@actions/exec";
+import * as pep440 from "@renovatebot/pep440";
 
 import * as cache from "./cache";
 import {
@@ -13,12 +14,21 @@ import {
   getPythonVersion,
 } from "./utils";
 
-async function getExpectedPoetryVersion(wantedVersion: string): Promise<string> {
+async function getExpectedPoetryVersion(wantedVersion: string, currentPythonVersion: [number, number, number]): Promise<string> {
   const json = await getPoetryPypiJSON();
 
   if (!wantedVersion) {
     core.info("poetry version not specified, latest poetry will be installed");
-    return json.info.version;
+    const pyVer = currentPythonVersion.join(",");
+    const currentPythonSupportedPoetry = Object.entries(json.releases).filter(([key, value]) => {
+      return pep440.satisfies(pyVer, value.requires_python) && pep440.satisfies(key, ">=1.3");
+    }).map(([key, _]) => key);
+    if (!currentPythonSupportedPoetry.length) {
+      core.error(`can't find any poetry version support current python version ${pyVer}`);
+      throw new Error("can't find poetry version support current python");
+    }
+
+    return currentPythonSupportedPoetry.sort((a, b) => pep440.compare(a, b))[0];
   }
 
   const version = getLatestMatchedVersion(Object.keys(json.releases), wantedVersion);
@@ -30,8 +40,8 @@ async function getExpectedPoetryVersion(wantedVersion: string): Promise<string> 
 
 async function run(): Promise<void> {
   let wantedVersion = core.getInput("version");
-  const poetryVersion = await getExpectedPoetryVersion(wantedVersion);
-  const pythonVersion = await getPythonVersion();
+  const [pythonVersion, pythonSemverVersion] = await getPythonVersion();
+  const poetryVersion = await getExpectedPoetryVersion(wantedVersion, pythonSemverVersion);
   core.info(`using python version ${pythonVersion}`);
 
   const poetryHome = path.join(os.homedir(), ".poetry");
