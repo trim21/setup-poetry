@@ -1,21 +1,10 @@
 module.exports = {
-  extends: [
-    "plugin:import/recommended",
-    "plugin:import/typescript",
-  ],
-  plugins: [
-    "import",
-    "promise",
-    "@typescript-eslint",
-    "jest",
-  ],
+  extends: ["plugin:import/recommended", "plugin:import/typescript"],
+  plugins: ["import", "promise", "@typescript-eslint", "jest"],
   parser: "@typescript-eslint/parser",
   overrides: [
     {
-      files: [
-        "*.test.ts",
-        "*.test.js",
-      ],
+      files: ["*.test.ts", "*.test.js"],
       env: {
         "jest/globals": true,
       },
@@ -36,23 +25,29 @@ module.exports = {
   rules: {
     "object-curly-spacing": ["error", "always"],
     "@typescript-eslint/object-curly-spacing": ["error", "always"],
-    quotes: ["error", "double", { "avoidEscape": true }],
-    "@typescript-eslint/member-delimiter-style": ["error", {
-      "multiline": {
-        "delimiter": "semi",
-        "requireLast": true,
+    quotes: ["error", "double", { avoidEscape: true }],
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
+      {
+        multiline: {
+          delimiter: "semi",
+          requireLast: true,
+        },
+        singleline: {
+          delimiter: "semi",
+          requireLast: false,
+        },
+        multilineDetection: "brackets",
       },
-      "singleline": {
-        "delimiter": "semi",
-        "requireLast": false,
+    ],
+    "space-before-function-paren": [
+      "error",
+      {
+        anonymous: "never",
+        named: "never",
+        asyncArrow: "always",
       },
-      "multilineDetection": "brackets",
-    }],
-    "space-before-function-paren": ["error", {
-      "anonymous": "never",
-      "named": "never",
-      "asyncArrow": "always",
-    }],
+    ],
     semi: ["error", "always"],
     "comma-dangle": ["error", "always-multiline"],
     "import/no-unused-modules": [
@@ -62,9 +57,7 @@ module.exports = {
       },
     ],
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-    ],
+    "@typescript-eslint/no-unused-vars": ["error"],
     "import/order": [
       "error",
       {
@@ -72,11 +65,7 @@ module.exports = {
         groups: [
           "builtin",
           "external",
-          [
-            "index",
-            "sibling",
-            "parent",
-          ],
+          ["index", "sibling", "parent"],
           "internal",
           "object",
         ],

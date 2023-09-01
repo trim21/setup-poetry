@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+yarn run lint-staged
+yarn run lint
+yarn exec tsc --noEmit

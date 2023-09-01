@@ -10,7 +10,9 @@ const cacheHome = path.join(os.homedir(), ".poetry", ".venv");
 
 function cacheKey(pyVersion: string, version: string): string {
   const md5 = crypto.createHash("md5");
-  const result = md5.update(process.platform + process.arch + pyVersion + version).digest("hex");
+  const result = md5
+    .update(process.platform + process.arch + pyVersion + version)
+    .digest("hex");
   const key = `trim21-tool-poetry-6-${result}`;
   core.info(`cache with key ${key}`);
   return key;
@@ -18,7 +20,7 @@ function cacheKey(pyVersion: string, version: string): string {
 
 export async function setup(
   pythonVersion: string,
-  poetryVersion: string
+  poetryVersion: string,
 ): Promise<void> {
   try {
     await cache.saveCache([cacheHome], cacheKey(pythonVersion, poetryVersion));
@@ -36,7 +38,7 @@ export async function setup(
 
 export async function restore(
   pythonVersion: string,
-  poetryVersion: string
+  poetryVersion: string,
 ): Promise<Boolean> {
   const key = cacheKey(pythonVersion, poetryVersion);
   const restoreCache = await cache.restoreCache([cacheHome], key);
