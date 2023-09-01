@@ -17,6 +17,7 @@ import {
 } from "./utils";
 
 async function getExpectedPoetryVersion(wantedVersion: string, currentPythonVersion: [number, number, number]): Promise<string> {
+  core.debug("getExpectedPoetryVersion");
   const json = await getPoetryPypiJSON();
 
   const pyVer = currentPythonVersion.join(",");
