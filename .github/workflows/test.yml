@@ -37,6 +37,9 @@ jobs:
   test-run: # make sure the action works on a clean machine without building
     needs: build
     runs-on: ${{ matrix.os }}
+    concurrency:
+      cancel-in-progress: true
+      group: '${{ github.workflow }}-${{ github.ref }}'
     strategy:
       fail-fast: true
       max-parallel: 6
