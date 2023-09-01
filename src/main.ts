@@ -31,7 +31,7 @@ async function getExpectedPoetryVersion(wantedVersion: string, currentPythonVers
 
   if (!wantedVersion) {
     core.info("poetry version not specified, latest poetry will be installed");
-    return currentPythonSupportedPoetry.sort((a, b) => pep440.compare(a, b))[0];
+    return currentPythonSupportedPoetry.sort((a, b) => -pep440.compare(a, b))[0];
   }
 
   const version = getLatestMatchedVersion(currentPythonSupportedPoetry, wantedVersion);
