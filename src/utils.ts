@@ -12,10 +12,10 @@ interface PypiJson {
      */
     version: string;
   };
-  releases: Record<string, {
+  releases: Record<string, [{
     requires_python: string;
     yanked: boolean;
-  }>;
+  }]>;
 }
 
 export function getLatestMatchedVersion(versions: string[], specifier: string,): string | null {
