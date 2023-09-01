@@ -22,7 +22,7 @@ async function getExpectedPoetryVersion(wantedVersion: string, currentPythonVers
     const pyVer = currentPythonVersion.join(",");
     const currentPythonSupportedPoetry = Object.entries(json.releases).filter(([key, value]) => {
       return pep440.satisfies(pyVer, value.requires_python) && pep440.satisfies(key, ">=1.3");
-    }).map(([key, _]) => key);
+    }).map(([key]) => key);
     if (!currentPythonSupportedPoetry.length) {
       core.error(`can't find any poetry version support current python version ${pyVer}`);
       throw new Error("can't find poetry version support current python");
