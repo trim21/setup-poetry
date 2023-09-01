@@ -56,7 +56,7 @@ export async function getPythonVersion(): Promise<[string, [number, number, numb
 
   await exec("python", ["-c", "import sys,json;print(json.dumps(sys.version_info))"], semverOptions);
 
-  return [myOutput, (JSON.parse(semverOutput) as Array<number>).slice(3) as [number, number, number]];
+  return [myOutput, (JSON.parse(semverOutput) as Array<number>).slice(0, 3) as [number, number, number]];
 }
 
 export async function createVenv(): Promise<string> {

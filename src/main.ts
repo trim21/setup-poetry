@@ -21,7 +21,6 @@ async function getExpectedPoetryVersion(wantedVersion: string, currentPythonVers
   const json = await getPoetryPypiJSON();
 
   const pyVer = currentPythonVersion.join(".");
-  console.log({ pyVer });
   const currentPythonSupportedPoetry = Object.entries(json.releases).filter(([key, values]) => {
     return pep440.satisfies(key, ">=1.3") && values.some(v => pep440.satisfies(pyVer, v.requires_python));
   }).map(([key]) => key);
