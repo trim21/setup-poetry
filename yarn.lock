@@ -1358,6 +1358,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/source-map-support@npm:^0.5.7":
+  version: 0.5.7
+  resolution: "@types/source-map-support@npm:0.5.7"
+  dependencies:
+    source-map: ^0.6.0
+  checksum: 6da844f0b8333a1789dd27ad7bb33b9bcb41159939a94451738a8f7a1e1fd69169aa6e2dda51ba8f61753c57ead159331330c996b1d672abc2e33d6991b38bf1
+  languageName: node
+  linkType: hard
+
 "@types/stack-utils@npm:^2.0.0":
   version: 2.0.1
   resolution: "@types/stack-utils@npm:2.0.1"
@@ -5263,6 +5272,7 @@ __metadata:
     "@renovatebot/pep440": 2.1.20
     "@types/jest": 29.5.3
     "@types/node": 18.17.1
+    "@types/source-map-support": ^0.5.7
     "@typescript-eslint/eslint-plugin": 6.2.1
     "@typescript-eslint/parser": 6.2.1
     esbuild: 0.18.17
@@ -5273,6 +5283,7 @@ __metadata:
     eslint-plugin-promise: 6.1.1
     jest: 29.6.2
     jest-circus: 29.6.2
+    source-map-support: ^0.5.21
     ts-jest: 29.1.1
     typescript: 5.1.6
   languageName: unknown
@@ -5368,6 +5379,16 @@ __metadata:
     buffer-from: ^1.0.0
     source-map: ^0.6.0
   checksum: 933550047b6c1a2328599a21d8b7666507427c0f5ef5eaadd56b5da0fd9505e239053c66fe181bf1df469a3b7af9d775778eee283cbb7ae16b902ddc09e93a97
+  languageName: node
+  linkType: hard
+
+"source-map-support@npm:^0.5.21":
+  version: 0.5.21
+  resolution: "source-map-support@npm:0.5.21"
+  dependencies:
+    buffer-from: ^1.0.0
+    source-map: ^0.6.0
+  checksum: 43e98d700d79af1d36f859bdb7318e601dfc918c7ba2e98456118ebc4c4872b327773e5a1df09b0524e9e5063bb18f0934538eace60cca2710d1fa687645d137
   languageName: node
   linkType: hard
 

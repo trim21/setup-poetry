@@ -1,3 +1,7 @@
+import sourceMapSupport from "source-map-support";
+
+sourceMapSupport.install();
+
 import * as os from "os";
 import * as fs from "fs";
 import * as path from "path";
