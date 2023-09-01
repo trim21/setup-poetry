@@ -12,7 +12,10 @@ interface PypiJson {
      */
     version: string;
   };
-  releases: Record<string, unknown>;
+  releases: Record<string, [{
+    requires_python: string;
+    yanked: boolean;
+  }]>;
 }
 
 export function getLatestMatchedVersion(versions: string[], specifier: string,): string | null {
@@ -28,7 +31,7 @@ export async function getPoetryPypiJSON(): Promise<PypiJson> {
   return JSON.parse(body) as PypiJson;
 }
 
-export async function getPythonVersion(): Promise<string> {
+export async function getPythonVersion(): Promise<[string, [number, number, number]]> {
   let myOutput = "";
   const options = {
     silent: true,
@@ -40,7 +43,20 @@ export async function getPythonVersion(): Promise<string> {
   };
 
   await exec("python", ["-VV"], options);
-  return myOutput;
+
+  let semverOutput = "";
+  const semverOptions = {
+    silent: true,
+    listeners: {
+      stdout: (data: Buffer) => {
+        semverOutput += data.toString();
+      },
+    },
+  };
+
+  await exec("python", ["-c", "import sys,json;print(json.dumps(sys.version_info))"], semverOptions);
+
+  return [myOutput, (JSON.parse(semverOutput) as Array<number>).slice(0, 3) as [number, number, number]];
 }
 
 export async function createVenv(): Promise<string> {
