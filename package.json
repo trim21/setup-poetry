@@ -16,7 +16,7 @@
   "license": "MIT",
   "packageManager": "yarn@3.6.3",
   "engines": {
-    "node": ">=16.16.0"
+    "node": "^20.0.0"
   },
   "dependencies": {
     "@actions/cache": "3.2.2",

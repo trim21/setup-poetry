@@ -3,13 +3,13 @@ name: deploy
 on:
   push:
     tags:
-      - "v1*"
+      - "v2*"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      NODE_VERSION: "18"
+      NODE_VERSION: "20"
     steps:
       - uses: actions/checkout@v3
 
@@ -36,7 +36,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           commit_message: deploy ${{ github.ref }}
-          publish_branch: dist/v1
+          publish_branch: dist/v2
           user_name: github-actions[bot]
           user_email: github-actions[bot]@users.noreply.github.com
           tag_name: dist/${{ env.TAG }}
