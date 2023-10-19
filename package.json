@@ -14,7 +14,7 @@
     "postversion": "git push"
   },
   "license": "MIT",
-  "packageManager": "yarn@3.6.3",
+  "packageManager": "yarn@3.6.4",
   "engines": {
     "node": "^20.0.0"
   },
