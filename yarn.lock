@@ -1187,10 +1187,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@renovatebot/pep440@npm:3.0.8":
-  version: 3.0.8
-  resolution: "@renovatebot/pep440@npm:3.0.8"
-  checksum: 87f778e682ba31e9c9dd31400e4ba23d47e914f82e079210cda2d455dcdb98fb13a4afc8734d2f2f2e9b19333f8e0b27f52fe9f7901546aa227a481bfd76b5e6
+"@renovatebot/pep440@npm:3.0.9":
+  version: 3.0.9
+  resolution: "@renovatebot/pep440@npm:3.0.9"
+  checksum: ee0a72c9e70e5ea06b786f447594f31550f0e7afc46689bcc1fd6408666d5b85f7ddab2f6c0a68a888eb12197e10fa8bb1e7a43be0e975fa8f5974b6b1c311eb
   languageName: node
   linkType: hard
 
@@ -5521,7 +5521,7 @@ __metadata:
     "@actions/core": 1.10.1
     "@actions/exec": 1.1.1
     "@actions/http-client": 2.2.0
-    "@renovatebot/pep440": 3.0.8
+    "@renovatebot/pep440": 3.0.9
     "@types/jest": 29.5.6
     "@types/node": 20.8.7
     "@types/source-map-support": 0.5.9
