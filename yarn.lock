@@ -1307,13 +1307,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:29.5.7":
-  version: 29.5.7
-  resolution: "@types/jest@npm:29.5.7"
+"@types/jest@npm:29.5.10":
+  version: 29.5.10
+  resolution: "@types/jest@npm:29.5.10"
   dependencies:
     expect: "npm:^29.0.0"
     pretty-format: "npm:^29.0.0"
-  checksum: 231c873f3d1ddac973b8f8f2ad7760677d941d85fb52d1c5dc4a311bafba4c2c1658a1040fd7054a51f4d1841f51c6ca4cabf70675ee4fa9e10fc5b8066e1de1
+  checksum: b46171d59d12a5f69bbe710f65eaf59a8073337c6b4a67dff8158575caec53f1c61f8a7d645b34d6ac3c4ea398acd30f0c5d1c4a131c0c918798019264a3397d
   languageName: node
   linkType: hard
 
@@ -5434,7 +5434,7 @@ __metadata:
     "@actions/exec": "npm:1.1.1"
     "@actions/http-client": "npm:2.2.0"
     "@renovatebot/pep440": "npm:3.0.12"
-    "@types/jest": "npm:29.5.7"
+    "@types/jest": "npm:29.5.10"
     "@types/node": "npm:20.8.10"
     "@types/source-map-support": "npm:0.5.9"
     "@typescript-eslint/eslint-plugin": "npm:6.9.1"
