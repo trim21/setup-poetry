@@ -30,7 +30,7 @@
     "*.{js,ts,yaml,md,yml,json}": "prettier -w"
   },
   "devDependencies": {
-    "@types/jest": "29.5.7",
+    "@types/jest": "29.5.10",
     "@types/node": "20.8.10",
     "@types/source-map-support": "0.5.9",
     "@typescript-eslint/eslint-plugin": "6.9.1",
