@@ -1348,12 +1348,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:20.11.15":
-  version: 20.11.15
-  resolution: "@types/node@npm:20.11.15"
+"@types/node@npm:*, @types/node@npm:20.11.24":
+  version: 20.11.24
+  resolution: "@types/node@npm:20.11.24"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 10c0/7dfab4208fedc02e9584c619551906f46ade7955bb929b1e32e354a50522eb532d6bfb2844fdaad2c8dca03be84a590674460c64cb101e1a33bb318e1ec448d4
+  checksum: 10c0/5a62225eb4797b41e6953f9c08c4611d607b5422ddd153312fc81ed6ed37115228ae27e3e3caa1a3bf52d88310306a196ba1cfbd8b2ec918a20f64d80dfa22c9
   languageName: node
   linkType: hard
 
@@ -5469,7 +5469,7 @@ __metadata:
     "@actions/http-client": "npm:2.2.0"
     "@renovatebot/pep440": "npm:3.0.19"
     "@types/jest": "npm:29.5.12"
-    "@types/node": "npm:20.11.15"
+    "@types/node": "npm:20.11.24"
     "@types/source-map-support": "npm:0.5.10"
     "@typescript-eslint/eslint-plugin": "npm:6.21.0"
     "@typescript-eslint/parser": "npm:6.21.0"
