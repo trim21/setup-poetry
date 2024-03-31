@@ -59,13 +59,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@actions/http-client@npm:2.2.0, @actions/http-client@npm:^2.0.1, @actions/http-client@npm:^2.1.1":
-  version: 2.2.0
-  resolution: "@actions/http-client@npm:2.2.0"
+"@actions/http-client@npm:2.2.1, @actions/http-client@npm:^2.0.1, @actions/http-client@npm:^2.1.1":
+  version: 2.2.1
+  resolution: "@actions/http-client@npm:2.2.1"
   dependencies:
     tunnel: "npm:^0.0.6"
     undici: "npm:^5.25.4"
-  checksum: 10c0/868fe8529d78beb72f84ea2486e232fa6f66abe00d6ec4591b98c37e762c3d812868a3548638d75b49917961fd10ba1556916b47b1e9e4b55c266e2013c3ae8e
+  checksum: 10c0/371771e68fcfe1383e59657eb5bc421aba5e1826f5e497efd826236b64fc1ff11f0bc91f936d7f1086f6bb3fd209736425a4d357b98fdfb7a8d054cbb84680e8
   languageName: node
   linkType: hard
 
@@ -5466,7 +5466,7 @@ __metadata:
     "@actions/cache": "npm:3.2.4"
     "@actions/core": "npm:1.10.1"
     "@actions/exec": "npm:1.1.1"
-    "@actions/http-client": "npm:2.2.0"
+    "@actions/http-client": "npm:2.2.1"
     "@renovatebot/pep440": "npm:3.0.19"
     "@types/jest": "npm:29.5.12"
     "@types/node": "npm:20.11.24"
