@@ -17,11 +17,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: yarn
+          cache: pnpm
 
-      - run: yarn
+      - run: pnpm
 
-      - run: yarn build
+      - run: pnpm run build
 
       - run: |
           mkdir dist/dist

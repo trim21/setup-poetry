@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 
-yarn run lint-staged
-yarn run lint
-yarn exec tsc --noEmit
+pnpm run lint
+pnpm exec lint-staged
+pnpm exec tsc --noEmit

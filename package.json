@@ -9,12 +9,10 @@
     "format": "prettier -w .",
     "build": "npx esbuild --bundle --platform=node --legal-comments=external --sourcemap=inline --target=node16 ./src/main.ts --outfile=dist/index.js",
     "test": "jest",
-    "all": "npm run lint && npm run build && npm test",
-    "postinstall": "husky install",
-    "postversion": "git push"
+    "prepare": "husky install"
   },
   "license": "MIT",
-  "packageManager": "yarn@4.1.1",
+  "packageManager": "pnpm@9.0.6",
   "engines": {
     "node": "^20.0.0"
   },
