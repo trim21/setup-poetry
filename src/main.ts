@@ -77,17 +77,26 @@ async function run(): Promise<void> {
       fs.mkdirSync(poetryHome);
     }
     process.chdir(poetryHome);
+
+    core.info("create virtualenv for poetry");
     const pythonPath = await createVenv();
+
+    core.info("install poetry");
     await exec(pythonPath, [
       "-m",
       "pip",
       "install",
       `poetry${poetryVersion ? `==${poetryVersion}` : ""}`,
     ]);
+
+    core.info("save cache");
     await cache.setup(pythonVersion, poetryVersion);
   }
+
   fs.mkdirSync(path.join(poetryHome, "bin"));
+  core.info("create symlink");
   await createSymlink(poetryHome);
+  core.info("add path");
   core.addPath(path.join(poetryHome, "bin"));
 }
 
