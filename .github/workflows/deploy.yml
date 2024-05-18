@@ -12,14 +12,14 @@ jobs:
       NODE_VERSION: "20"
     steps:
       - uses: actions/checkout@v4
-
+      - uses: pnpm/action-setup@v3
       - name: Setup node
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
 
-      - run: pnpm
+      - run: pnpm i
 
       - run: pnpm run build
 
