@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "eslint --ext ts,js ./",
     "format": "prettier -w .",
-    "build": "npx esbuild --bundle --platform=node --legal-comments=external --sourcemap=inline --target=node16 ./src/main.ts --outfile=dist/index.js",
+    "build": "npx esbuild --bundle --platform=node --packages=bundle --legal-comments=external --sourcemap=inline --target=node16 ./src/main.ts --outfile=dist/index.js",
     "test": "jest",
     "prepare": "husky install"
   },
