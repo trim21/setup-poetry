@@ -63,7 +63,7 @@ async function run(): Promise<void> {
   let wantedVersion = core.getInput("version");
   const [pythonVersion, pythonSemverVersion] = await getPythonVersion();
   core.info(
-    `using python version ${pythonSemverVersion}, full spec: ${pythonVersion}`,
+    `using python version ${pythonSemverVersion.join(".")}, full spec: ${pythonVersion}`,
   );
   const poetryVersion = await getExpectedPoetryVersion(
     wantedVersion,
