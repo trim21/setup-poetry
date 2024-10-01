@@ -5,10 +5,12 @@ import eslintPluginUnicorn from "eslint-plugin-unicorn";
 import eslintPluginTsDoc from "eslint-plugin-tsdoc";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import unusedImports from "eslint-plugin-unused-imports";
+import pluginPromise from "eslint-plugin-promise";
 
 export default tsEslint.config(
   { ignores: ["dist/**", "coverage/**"] },
   eslint.configs.recommended,
+  pluginPromise.configs["flat/recommended"],
   ...tsEslint.configs.recommendedTypeChecked,
   ...tsEslint.configs.strict,
   {
@@ -120,6 +122,14 @@ export default tsEslint.config(
           message: "use 'const enum'",
         },
       ],
+    },
+  },
+
+  {
+    files: ["*.js", "*.mjs"],
+    rules: {
+      "@typescript-eslint/no-unsafe-argument": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
     },
   },
   eslintConfigPrettier,
