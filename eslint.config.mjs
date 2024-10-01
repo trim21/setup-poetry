@@ -8,7 +8,7 @@ import unusedImports from "eslint-plugin-unused-imports";
 import pluginPromise from "eslint-plugin-promise";
 
 export default tsEslint.config(
-  { ignores: ["dist/**", "coverage/**"] },
+  { ignores: ["dist/**", "coverage/**", "**/*.test.ts"] },
   eslint.configs.recommended,
   pluginPromise.configs["flat/recommended"],
   ...tsEslint.configs.recommendedTypeChecked,
