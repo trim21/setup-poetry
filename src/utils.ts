@@ -1,8 +1,9 @@
-import * as path from "path";
-import { promises as fs } from "fs";
+import * as path from "node:path";
+import { promises as fs } from "node:fs";
 
 import { exec } from "@actions/exec";
-import { HttpClient, HttpClientResponse } from "@actions/http-client";
+import type { HttpClientResponse } from "@actions/http-client";
+import { HttpClient } from "@actions/http-client";
 import * as pep440 from "@renovatebot/pep440";
 
 interface PypiJson {

@@ -1,6 +1,6 @@
-import * as os from "os";
-import * as path from "path";
-import * as crypto from "crypto";
+import * as os from "node:os";
+import * as path from "node:path";
+import * as crypto from "node:crypto";
 
 import * as cache from "@actions/cache";
 import * as core from "@actions/core";
@@ -24,22 +24,22 @@ export async function setup(
 ): Promise<void> {
   try {
     await cache.saveCache([cacheHome], cacheKey(pythonVersion, poetryVersion));
-  } catch (e) {
-    if (e?.toString().includes("another job may be creating this cache")) {
+  } catch (error) {
+    if (error?.toString().includes("another job may be creating this cache")) {
       return;
     }
 
-    if (e instanceof ReserveCacheError) {
-      throw e;
+    if (error instanceof ReserveCacheError) {
+      throw error;
     }
-    throw e;
+    throw error;
   }
 }
 
 export async function restore(
   pythonVersion: string,
   poetryVersion: string,
-): Promise<Boolean> {
+): Promise<boolean> {
   const key = cacheKey(pythonVersion, poetryVersion);
   const restoreCache = await cache.restoreCache([cacheHome], key);
   core.info(`expected cache key ${JSON.stringify(key)}`);

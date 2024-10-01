@@ -1,8 +1,8 @@
 import "source-map-support/register";
 
-import * as os from "os";
-import * as fs from "fs";
-import * as path from "path";
+import * as os from "node:os";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 import * as core from "@actions/core";
 import { exec } from "@actions/exec";
@@ -33,7 +33,7 @@ async function getExpectedPoetryVersion(
       );
     })
     .map(([key]) => key);
-  if (!currentPythonSupportedPoetry.length) {
+  if (currentPythonSupportedPoetry.length === 0) {
     core.error(
       `can't find any poetry version support current python version ${pyVer}`,
     );
@@ -60,7 +60,7 @@ async function getExpectedPoetryVersion(
 }
 
 async function run(): Promise<void> {
-  let wantedVersion = core.getInput("version");
+  const wantedVersion = core.getInput("version");
   const [pythonVersion, pythonSemverVersion] = await getPythonVersion();
   core.info(
     `using python version ${pythonSemverVersion.join(".")}, full spec: ${pythonVersion}`,
@@ -100,8 +100,11 @@ async function run(): Promise<void> {
   core.addPath(path.join(poetryHome, "bin"));
 }
 
-run().catch((e) => {
-  core.error(e);
-  core.setFailed(e);
-  throw e;
+// eslint-disable-next-line unicorn/prefer-top-level-await
+run().catch((error) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  core.error(error);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  core.setFailed(error);
+  throw error;
 });

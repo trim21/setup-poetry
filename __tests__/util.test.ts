@@ -1,7 +1,11 @@
 import { getPoetryPypiJSON, getLatestMatchedVersion } from "../src/utils";
+import { test, expect } from "@jest/globals";
 
 test("throws invalid number", async () => {
-  expect((await getPoetryPypiJSON()).info.version).toMatch(/\d+\.\d+\.\d+/);
+  await expect(getPoetryPypiJSON()).resolves.toHaveProperty(
+    "info.version",
+    expect.stringMatching(/\d+\.\d+\.\d+/),
+  );
 });
 
 test("select latest version", () => {
