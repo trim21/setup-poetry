@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@actions/cache':
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.3.0
+        version: 3.3.0
       '@actions/core':
         specifier: 1.11.1
         version: 1.11.1
@@ -21,8 +21,8 @@ importers:
         specifier: 2.2.3
         version: 2.2.3
       '@renovatebot/pep440':
-        specifier: 3.0.20
-        version: 3.0.20
+        specifier: 3.1.0
+        version: 3.1.0
       source-map-support:
         specifier: 0.5.21
         version: 0.5.21
@@ -99,8 +99,8 @@ importers:
 
 packages:
 
-  '@actions/cache@3.2.4':
-    resolution: {integrity: sha512-RuHnwfcDagtX+37s0ZWy7clbOfnZ7AlDJQ7k/9rzt2W4Gnwde3fa/qjSjVuz4vLcLIpc7fUob27CMrqiWZytYA==}
+  '@actions/cache@3.3.0':
+    resolution: {integrity: sha512-+eCsMTIZUEm+QA9GqjollOhCdvRrZ1JV8d9Rp34zVNizBkYITO8dhKczP5Xps1dFzc5n59p7vYVtZrGt18bb5Q==}
 
   '@actions/core@1.11.1':
     resolution: {integrity: sha512-hXJCSrkwfA46Vd9Z3q4cpEpHB1rL5NG04+/rbqW9d3+CSvtB1tYe8UTpAlixa1vj0m/ULglfEK2UKxMGxCxv5A==}
@@ -657,9 +657,9 @@ packages:
     resolution: {integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==}
     engines: {node: '>=12.4.0'}
 
-  '@renovatebot/pep440@3.0.20':
-    resolution: {integrity: sha512-Jw8jzHh2r1LAPTrjQlIwh/+8J3N2MqXZgPuTt6HdNeJIBjJskV8bsEfGs9rBzXi/omeHob3BXnvlECu2rCCUYw==}
-    engines: {node: ^18.12.0 || >= 20.0.0, pnpm: ^8.6.11}
+  '@renovatebot/pep440@3.1.0':
+    resolution: {integrity: sha512-Tx/wEv92j3HmFwlqfNp8Pq/BMJPVk8c5so/Ae8eHccceBeeZx4QDuLf6RYfXJ6kvw8H05K1KPoZSsigLQA7Rqg==}
+    engines: {node: ^18.12.0 || ^20.0.0 || ^22.11.0, pnpm: ^8.6.11}
 
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
@@ -2316,11 +2316,6 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
-  uuid@3.4.0:
-    resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
-    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
-    hasBin: true
-
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
@@ -2399,7 +2394,7 @@ packages:
 
 snapshots:
 
-  '@actions/cache@3.2.4':
+  '@actions/cache@3.3.0':
     dependencies:
       '@actions/core': 1.11.1
       '@actions/exec': 1.1.1
@@ -2410,7 +2405,6 @@ snapshots:
       '@azure/ms-rest-js': 2.7.0
       '@azure/storage-blob': 12.25.0
       semver: 6.3.1
-      uuid: 3.4.0
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -3085,7 +3079,7 @@ snapshots:
 
   '@nolyfill/is-core-module@1.0.39': {}
 
-  '@renovatebot/pep440@3.0.20': {}
+  '@renovatebot/pep440@3.1.0': {}
 
   '@sinclair/typebox@0.27.8': {}
 
@@ -4899,8 +4893,6 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
-
-  uuid@3.4.0: {}
 
   uuid@8.3.2: {}
 
