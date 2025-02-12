@@ -33,7 +33,7 @@
     "@types/jest": "29.5.14",
     "@types/node": "20.17.8",
     "@types/source-map-support": "0.5.10",
-    "esbuild": "0.24.0",
+    "esbuild": "0.25.0",
     "eslint": "9.15.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-import-resolver-typescript": "3.6.3",
