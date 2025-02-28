@@ -21,8 +21,8 @@ importers:
         specifier: 2.2.3
         version: 2.2.3
       '@renovatebot/pep440':
-        specifier: 4.0.1
-        version: 4.0.1
+        specifier: 4.1.0
+        version: 4.1.0
       source-map-support:
         specifier: 0.5.21
         version: 0.5.21
@@ -688,8 +688,8 @@ packages:
   '@protobuf-ts/runtime@2.9.4':
     resolution: {integrity: sha512-vHRFWtJJB/SiogWDF0ypoKfRIZ41Kq+G9cEFj6Qm1eQaAhJ1LDFvgZ7Ja4tb3iLOQhz0PaoPnnOijF1qmEqTxg==}
 
-  '@renovatebot/pep440@4.0.1':
-    resolution: {integrity: sha512-jKodfnFIIGjK9PcoB7+2JkDQ+prjv3LHFMUS21F3+IEaiGomrvpiH27+gjyQRRwtSkkRnrxkqjEPdkj2IxC2qA==}
+  '@renovatebot/pep440@4.1.0':
+    resolution: {integrity: sha512-mo2RxnOSp78Njt1HmgMwjl6FapP4OyIS8HypJlymCvN7AIV2Xf5PmZfl/E3O1WWZ6IjKrfsEAaPWFMi8tnkq3g==}
     engines: {node: ^20.9.0 || ^22.11.0, pnpm: ^9.0.0}
 
   '@sinclair/typebox@0.27.8':
@@ -3147,7 +3147,7 @@ snapshots:
 
   '@protobuf-ts/runtime@2.9.4': {}
 
-  '@renovatebot/pep440@4.0.1': {}
+  '@renovatebot/pep440@4.1.0': {}
 
   '@sinclair/typebox@0.27.8': {}
 
